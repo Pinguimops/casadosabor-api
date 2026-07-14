@@ -1,0 +1,134 @@
+/*-----------------------------------*\
+  #BUTTONS.CSS
+\*-----------------------------------*/
+
+/* Primary / bordered gold button */
+.btn {
+  position: relative;
+  color: var(--gold-crayola);
+  font-size: var(--fontSize-label-2);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letterSpacing-5);
+  max-width: max-content;
+  border: 2px solid var(--gold-crayola);
+  padding: 12px 45px;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200%;
+  height: 200%;
+  border-radius: var(--radius-circle);
+  background-color: var(--gold-crayola);
+  transition: var(--transition-2);
+  z-index: -1;
+}
+
+.btn .text             { transition: var(--transition-1); }
+.btn .text-2 {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: max-content;
+  color: var(--smoky-black-1);
+}
+
+.btn:is(:hover, :focus-visible)::before        { bottom: -50%; }
+.btn:is(:hover, :focus-visible) .text-1        { transform: translateY(-40px); }
+.btn:is(:hover, :focus-visible) .text-2        { top: 50%; transform: translate(-50%, -50%); }
+
+/* Secondary (filled gold) button */
+.btn-secondary {
+  background-color: var(--gold-crayola);
+  color: var(--black);
+}
+.btn-secondary::before  { background-color: var(--smoky-black-1); }
+.btn-secondary .text-2  { color: var(--white); }
+
+/* Login / header action buttons */
+.btn-login {
+  position: relative;
+  color: var(--gold-crayola);
+  font-size: var(--fontSize-label-2);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letterSpacing-5);
+  border: 2px solid var(--gold-crayola);
+  padding: 10px 22px;
+  background: transparent;
+  cursor: pointer;
+  transition: var(--transition-1);
+  white-space: nowrap;
+  display: inline-block;
+  font-family: var(--fontFamily-dm_sans);
+}
+.btn-login:hover {
+  background-color: var(--gold-crayola);
+  color: var(--smoky-black-1);
+}
+
+.btn-logout {
+  color: var(--quick-silver);
+  font-size: 1.1rem;
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid var(--white-alpha-20);
+  padding: 8px 16px;
+  background: transparent;
+  cursor: pointer;
+  transition: var(--transition-1);
+  font-family: var(--fontFamily-dm_sans);
+  display: inline-block;
+}
+.btn-logout:hover { border-color: var(--gold-crayola); color: var(--gold-crayola); }
+
+/* Login modal primary/ghost buttons */
+.lm-btn-primary {
+  background-color: var(--gold-crayola);
+  color: var(--smoky-black-1);
+  font-size: 1.2rem;
+  font-weight: var(--weight-bold);
+  padding: 12px 40px;
+  border: 2px solid var(--gold-crayola);
+  text-transform: uppercase;
+  letter-spacing: var(--letterSpacing-5);
+  cursor: pointer;
+  transition: var(--transition-1);
+  margin-top: 6px;
+  width: 100%;
+  display: block;
+  font-family: var(--fontFamily-dm_sans);
+}
+.lm-btn-primary:hover {
+  background-color: transparent;
+  color: var(--gold-crayola);
+}
+
+.lm-btn-ghost {
+  background-color: transparent;
+  color: var(--gold-crayola);
+  font-size: 1.2rem;
+  font-weight: var(--weight-bold);
+  padding: 11px 36px;
+  border: 2px solid var(--gold-crayola);
+  text-transform: uppercase;
+  letter-spacing: var(--letterSpacing-5);
+  cursor: pointer;
+  transition: var(--transition-1);
+  font-family: var(--fontFamily-dm_sans);
+  display: block;
+}
+.lm-btn-ghost:hover {
+  background-color: var(--gold-crayola);
+  color: var(--smoky-black-1);
+}

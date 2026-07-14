@@ -1,0 +1,391 @@
+/*-----------------------------------*\
+  #ALIGNMENT.CSS  — v3
+  All layout/alignment fixes in one place
+\*-----------------------------------*/
+
+/* ── GLOBAL CONTAINER ───────────────────────────────── */
+.container {
+  padding-inline: 20px;
+  width: 100%;
+  margin-inline: auto;
+}
+@media (min-width: 576px)  { .container { max-width: 540px;  } }
+@media (min-width: 768px)  { .container { max-width: 720px;  } }
+@media (min-width: 992px)  { .container { max-width: 960px;  } }
+@media (min-width: 1200px) { .container { max-width: 1140px; } }
+@media (min-width: 1400px) { .container { max-width: 1320px; } }
+
+/* Keep service/event containers fluid */
+.service .container,
+.event .container { max-width: inherit; }
+
+/* ── HEADER ─────────────────────────────────────────── */
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-inline: 20px;
+  max-width: 100%;
+}
+#headerAuthArea { display: flex; align-items: center; }
+.btn-login-icon,
+.btn-cart-icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+}
+.header-user-info { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+
+/* ── TOPBAR ─────────────────────────────────────────── */
+.topbar .container {
+  display: flex; align-items: center; justify-content: center;
+  gap: 24px; flex-wrap: wrap; max-width: 100%; padding-inline: 20px;
+}
+.topbar-item { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+/* ── SECTION TITLES ─────────────────────────────────── */
+.section-subtitle { margin-block-end: 10px; }
+.section-title    { margin-block-end: 18px; }
+.section-text     { margin-block-end: 32px; max-width: 600px; margin-inline: auto; }
+
+/* ─────────────────────────────────────────────────────
+   1. SERVICE (Oferecemos o Melhor) — SMALLER images
+───────────────────────────────────────────────────── */
+.service .grid-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (min-width: 768px) {
+  .service .grid-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+  .service .grid-list li:last-child { grid-column: auto; width: 100%; margin-inline: 0; }
+  .service .grid-list li:nth-child(2n+1) { transform: none; }
+}
+.service-card {
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center; height: 100%;
+}
+/* Imagem inteira sem corte — overflow:hidden mantido para clips dos efeitos */
+.service-card .has-before {
+  width: 68%;            /* cartão mais pequeno */
+  margin-inline: auto;
+  overflow: hidden;      /* mantém efeitos ::before e shine contidos */
+}
+/* Imagem ocupa o espaço disponível sem corte */
+.service-card .has-before img {
+  object-fit: contain !important;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+}
+/* O img-holder/figure não deve forçar uma altura fixa */
+.service-card figure,
+.service-card .img-holder,
+.service-card .card-bannerimg-holder {
+  aspect-ratio: auto !important;
+  height: auto !important;
+  background: transparent;
+}
+.service-card .card-content { padding-block: 16px 10px; width: 100%; }
+.service .card-title { margin-block-end: 8px; }
+
+/* ─────────────────────────────────────────────────────
+   2. ABOUT — elegant single-image layout
+───────────────────────────────────────────────────── */
+.about .container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 992px) {
+  .about .container { grid-template-columns: 1fr 1fr; gap: 64px; }
+}
+.about-content { text-align: center; }
+@media (min-width: 992px) { .about-content { text-align: left; } }
+
+/* Hide the overlapping abs-img elements — show only the main banner cleanly */
+.about .abs-img-1,
+.about .abs-img-2 { display: none; }
+
+.about-banner {
+  position: relative;
+  margin-block-end: 0;
+  border: 1px solid hsla(38,61%,73%,0.2);
+  overflow: hidden;
+}
+.about-banner > .w-100 {
+  padding-inline-start: 0;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+/* Elegant gold corner ornaments on the image */
+.about-banner::before,
+.about-banner::after {
+  content: "";
+  position: absolute;
+  width: 40px; height: 40px;
+  border-color: var(--gold-crayola);
+  border-style: solid;
+  z-index: 2;
+  opacity: .7;
+}
+.about-banner::before {
+  top: 12px; left: 12px;
+  border-width: 2px 0 0 2px;
+}
+.about-banner::after {
+  bottom: 12px; right: 12px;
+  border-width: 0 2px 2px 0;
+}
+/* Remove the shape decoration that clashes */
+.about .shape { display: none; }
+
+/* ─────────────────────────────────────────────────────
+   3. SPECIAL DISH — image contained within borders
+───────────────────────────────────────────────────── */
+.special-dish {
+  overflow: hidden;
+  position: relative;
+}
+.special-dish-banner {
+  overflow: hidden;
+  max-height: 500px;
+}
+.special-dish-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+@media (min-width: 992px) {
+  .special-dish {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+  .special-dish-banner {
+    max-height: none;
+    height: 100%;
+    min-height: 450px;
+  }
+  .special-dish-content { padding: 60px 48px; }
+}
+.special-dish .shape { display: none; }
+
+/* ─────────────────────────────────────────────────────
+   4. MENU — "Ver Toda Ementa" centered; remove shapes
+───────────────────────────────────────────────────── */
+.menu .grid-list { grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 768px)  { .menu .grid-list { grid-template-columns: 1fr 1fr; gap: 28px 40px; } }
+@media (min-width: 1200px) { .menu .grid-list { gap: 36px 80px; } }
+
+.menu-card { display: flex; align-items: flex-start; gap: 16px; padding-block: 8px; }
+.menu-card .card-banner {
+  flex-shrink: 0; width: 90px; height: 90px;
+  border-radius: 50%; overflow: hidden;
+}
+.menu-card > div { flex: 1; min-width: 0; }
+.menu-card .title-wrapper {
+  display: flex; flex-wrap: wrap;
+  align-items: center; gap: 8px; margin-block-end: 6px;
+}
+.menu-card .span { margin-block: 0; flex-grow: 1; text-align: right; }
+.menu-card .card-text { margin-block-end: 8px; }
+.add-to-cart-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-block-start: 10px; font-size: 1.1rem; padding: 7px 14px;
+}
+
+/* Center the "Ver Toda Ementa" button */
+.menu .btn {
+  display: flex;
+  margin-inline: auto;
+  margin-block-start: 32px;
+}
+.menu-text { margin-block-end: 12px; }
+
+/* Hide the rotating shape decorations */
+.menu .shape-2,
+.menu .shape-3 { display: none !important; }
+
+/* ─────────────────────────────────────────────────────
+   5. EVENTS — smaller images; "Ver o nosso blog" centered
+───────────────────────────────────────────────────── */
+.event .grid-list { grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 600px) {
+  .event .grid-list { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .event .grid-list li:last-child { grid-column: auto; width: 100%; margin-inline: 0; }
+}
+.event-card { height: 100%; }
+/* Event cards: shorter aspect ratio (350×300 em vez de 350×450) */
+.event-card .card-banner,
+.event-card .banner {
+  overflow: hidden;
+  position: relative;
+  /* Sobrepõe as CSS vars do HTML para cartões mais baixos */
+  aspect-ratio: 350 / 290 !important;
+}
+/* A imagem preenche o cartão correctamente, sem distorção */
+.event-card .card-banner img,
+.event-card .banner img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+/* Center the blog button */
+.event .btn {
+  display: flex;
+  margin-inline: auto;
+  margin-block-start: 36px;
+}
+
+/* ─────────────────────────────────────────────────────
+   6. FOOTER — original elegant layout restored
+───────────────────────────────────────────────────── */
+.footer .grid-list {
+  grid-template-columns: 1fr;
+  gap: 0;
+  text-align: center;
+}
+@media (min-width: 992px) {
+  .footer .grid-list {
+    grid-template-columns: 0.45fr 1fr 0.45fr;
+    align-items: center;
+  }
+  .footer-brand { grid-column: auto; order: 1; }
+  .footer-list:last-child { order: 2; }
+}
+.footer-list { gap: 20px; }
+.footer-brand { padding: 50px 40px; }
+
+/* ── FEATURES ───────────────────────────────────────── */
+.features .grid-list { grid-template-columns: 1fr 1fr; gap: 2px; }
+@media (min-width: 992px) { .features .grid-list { grid-template-columns: repeat(4, 1fr); } }
+.feature-card {
+  padding: 32px 20px;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+}
+
+/* ── FLOOR PLAN ─────────────────────────────────────── */
+.reservation-map-section .container {
+  display: flex; flex-direction: column; align-items: center;
+}
+.floor-plan-wrap { width: 100%; }
+
+/* ── CART ───────────────────────────────────────────── */
+.cart-drawer { max-width: 380px; }
+
+/* ── CHECKOUT ───────────────────────────────────────── */
+.checkout-wrap { align-items: start; }
+.checkout-panel { border-radius: 2px; }
+.delivery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 480px) { .delivery-grid { grid-template-columns: 1fr; } }
+.payment-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 560px) { .payment-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* ── FORM INPUTS ────────────────────────────────────── */
+.input-field, .co-input {
+  height: 50px; padding: 0 18px;
+  font-size: var(--fontSize-label-1);
+  display: flex; align-items: center;
+}
+textarea.input-field, textarea.co-input {
+  height: 120px; padding: 14px 18px;
+  resize: vertical; display: block; align-items: unset;
+}
+
+/* ── BUTTONS ────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; justify-content: center; }
+
+/* ─────────────────────────────────────────────────────
+   PAGE HERO (subpages)
+───────────────────────────────────────────────────── */
+.page-hero {
+  padding-block-start: 150px; padding-block-end: 70px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ─────────────────────────────────────────────────────
+   7. MENU PAGE — remove the vertical divider line
+───────────────────────────────────────────────────── */
+/* Hide the ::before pseudo-element that creates the center divider */
+.menu .grid-list::before { display: none !important; content: none !important; }
+
+#menuGrid { grid-template-columns: 1fr; }
+@media (min-width: 640px)  { #menuGrid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { #menuGrid { grid-template-columns: 1fr 1fr 1fr; } }
+
+/* ── CHEFS PAGE ─────────────────────────────────────── */
+.chefs-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+@media (min-width: 600px)  { .chefs-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .chefs-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* ── CONTACT PAGE ───────────────────────────────────── */
+.contact-cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 600px)  { .contact-cards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .contact-cards { grid-template-columns: repeat(4, 1fr); } }
+.map-wrap { border-radius: 2px; overflow: hidden; }
+
+/* ── RESERVATION FORM (contact) ─────────────────────── */
+.reservation-form { display: grid; grid-template-columns: 1fr; overflow: hidden; }
+@media (min-width: 992px) { .reservation-form { grid-template-columns: 1fr 0.45fr; } }
+.form-left, .form-right { padding: 40px 28px; }
+@media (min-width: 1200px) { .form-left, .form-right { padding: 60px 48px; } }
+
+/* ─────────────────────────────────────────────────────
+   8-10. SUBPAGES — keep original footer/bottom intact
+   (footer.css already handles footer correctly;
+    we just don't override it here)
+───────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────
+   11. RESERVATION BUTTONS — ensure scroll works
+───────────────────────────────────────────────────── */
+#reserva { scroll-margin-top: 90px; }
+
+/* ─────────────────────────────────────────────────────
+   LOGIN MODAL — close button always visible
+───────────────────────────────────────────────────── */
+.login-modal-backdrop {
+  position: fixed; inset: 0;
+  display: none; align-items: center; justify-content: center;
+  z-index: 1000; padding: 20px;
+}
+.login-modal-backdrop.open { display: flex; }
+.login-modal-close {
+  position: fixed; top: 20px; right: 20px;
+  z-index: 1100;
+  background: var(--eerie-black-4);
+  border: 1.5px solid var(--gold-crayola);
+  color: var(--gold-crayola);
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; cursor: pointer;
+  transition: var(--transition-1); line-height: 1;
+}
+.login-modal-close:hover { background: var(--gold-crayola); color: var(--smoky-black-1); }
+
+/* ── Service cards: center "Ver Ementa" link ─────── */
+.service-card .card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.service .btn-text { margin-inline: auto; }
+
+/* ── Menu page cards: "Ver Toda Ementa" btn centered */
+.menu .btn { margin-inline: auto; }
+
+/* ── Make sure the menu section btn-text on the
+      service cards doesn't float left ── */
+.card-content .btn-text { display: block; text-align: center; }

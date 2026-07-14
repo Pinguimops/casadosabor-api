@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seguir Encomenda — Casa do Sabor</title>
+  <link rel="shortcut icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/buttons.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" href="../css/cart.css">
+
+  <style>
+  /* ── Layout ─────────────────────────────────────── */
+  body { min-height: 100vh; background-color: var(--eerie-black-1); }
+
+  .tracking-page {
+    padding-block-start: 120px;
+    padding-block-end: 60px;
+    min-height: 100vh;
+  }
+
+  .tracking-container {
+    max-width: 780px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  /* ── Top header strip ──────────────────────────── */
+  .tracking-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-block-end: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .tracking-ref {
+    font-size: var(--fontSize-label-1);
+    color: var(--quick-silver);
+    text-transform: uppercase;
+    letter-spacing: var(--letterSpacing-3);
+  }
+  .tracking-ref span {
+    color: var(--gold-crayola);
+    font-weight: var(--weight-bold);
+    font-size: var(--fontSize-body-4);
+  }
+  .tracking-date {
+    font-size: var(--fontSize-label-1);
+    color: var(--quick-silver);
+  }
+
+  /* ── Status hero card ───────────────────────────── */
+  .status-hero {
+    background: linear-gradient(135deg, var(--smoky-black-1) 0%, var(--eerie-black-2) 100%);
+    border: 1px solid hsla(38,61%,73%,0.2);
+    padding: 32px 28px;
+    margin-block-end: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .status-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, hsla(38,61%,73%,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .status-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: hsla(38,61%,73%,0.1);
+    border: 2px solid var(--gold-crayola);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .status-icon svg { color: var(--gold-crayola); }
+
+  /* Pulse ring animation */
+  .status-icon.pulsing::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-crayola);
+    animation: pulse-ring 1.8s ease-out infinite;
+    opacity: 0;
+  }
+  @keyframes pulse-ring {
+    0%   { transform: scale(0.9); opacity: 0.6; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+
+  .status-label {
+    font-family: var(--fontFamily-forum);
+    font-size: var(--fontSize-headline-2);
+    color: var(--white);
+    margin-block-end: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .status-sublabel {
+    color: var(--quick-silver);
+    font-size: var(--fontSize-body-4);
+    position: relative;
+    z-index: 1;
+  }
+  .status-sublabel strong { color: var(--gold-crayola); }
+
+  /* ETA badge */
+  .eta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsla(38,61%,73%,0.12);
+    border: 1px solid hsla(38,61%,73%,0.3);
+    padding: 10px 20px;
+    margin-block-start: 18px;
+    font-size: var(--fontSize-label-1);
+    color: var(--gold-crayola);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--letterSpacing-3);
+    position: relative;
+    z-index: 1;
+  }
+  .eta-badge .eta-time {
+    font-family: var(--fontFamily-forum);
+    font-size: var(--fontSize-title-2);
+    color: var(--white);
+  }
+  .eta-badge .eta-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold-crayola);
+    animation: dot-blink 1.2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes dot-blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+  /* ── Progress tracker ───────────────────────────── */
+  .progress-track {
+    background: var(--eerie-black-2);
+    border: 1px solid hsla(38,61%,73%,0.12);
+    padding: 28px 24px;
+    margin-block-end: 24px;
+  }
+  .progress-track-title {
+    font-size: var(--fontSize-label-1);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--letterSpacing-3);
+    color: var(--quick-silver);
+    margin-block-end: 28px;
+  }
+
+  /* Steps list */
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    padding-block-end: 32px;
+  }
+  .step-item:last-child { padding-block-end: 0; }
+
+  /* Vertical connector line */
+  .step-item:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 19px;
+    top: 40px;
+    bottom: 0;
+    width: 2px;
+    background: hsla(38,61%,73%,0.15);
+    z-index: 0;
+  }
+  .step-item.done:not(:last-child)::before,
+  .step-item.active:not(:last-child)::before {
+    background: linear-gradient(to bottom, var(--gold-crayola), hsla(38,61%,73%,0.15));
+  }
+
+  /* Step circle */
+  .step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid hsla(38,61%,73%,0.2);
+    background: var(--eerie-black-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s ease;
+  }
+  .step-circle svg { color: hsla(38,61%,73%,0.25); transition: color 0.4s; }
+
+  .step-item.done .step-circle {
+    border-color: var(--gold-crayola);
+    background: var(--gold-crayola);
+  }
+  .step-item.done .step-circle svg { color: var(--smoky-black-1); }
+
+  .step-item.active .step-circle {
+    border-color: var(--gold-crayola);
+    background: hsla(38,61%,73%,0.12);
+    box-shadow: 0 0 0 6px hsla(38,61%,73%,0.1);
+    animation: step-glow 2s ease-in-out infinite;
+  }
+  .step-item.active .step-circle svg { color: var(--gold-crayola); }
+
+  @keyframes step-glow {
+    0%,100% { box-shadow: 0 0 0 4px hsla(38,61%,73%,0.1); }
+    50%      { box-shadow: 0 0 0 10px hsla(38,61%,73%,0.05); }
+  }
+
+  /* Step text */
+  .step-content { padding-block-start: 8px; flex: 1; }
+  .step-name {
+    font-size: var(--fontSize-body-4);
+    font-weight: var(--weight-bold);
+    color: var(--quick-silver);
+    margin-block-end: 4px;
+    transition: color 0.4s;
+  }
+  .step-item.done   .step-name { color: var(--gold-crayola); }
+  .step-item.active .step-name { color: var(--white); font-size: var(--fontSize-body-3); }
+
+  .step-desc {
+    font-size: var(--fontSize-label-1);
+    color: hsla(0,0%,50%,0.5);
+    line-height: var(--lineHeight-3);
+    transition: color 0.4s;
+  }
+  .step-item.done   .step-desc { color: var(--quick-silver); }
+  .step-item.active .step-desc { color: var(--quick-silver); }
+
+  .step-time {
+    font-size: 1.1rem;
+    color: var(--gold-crayola);
+    margin-block-start: 4px;
+    display: none;
+  }
+  .step-item.done .step-time,
+  .step-item.active .step-time { display: block; }
+
+  /* ── Delivery info panel ────────────────────────── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-block-end: 24px;
+  }
+  @media (max-width: 560px) { .info-grid { grid-template-columns: 1fr; } }
+
+  .info-card {
+    background: var(--eerie-black-2);
+    border: 1px solid hsla(38,61%,73%,0.12);
+    padding: 20px 18px;
+  }
+  .info-card-label {
+    font-size: 1.1rem;
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--letterSpacing-3);
+    color: var(--gold-crayola);
+    margin-block-end: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .info-card-label svg { flex-shrink: 0; }
+  .info-card-value {
+    font-size: var(--fontSize-body-4);
+    color: var(--white);
+    line-height: var(--lineHeight-3);
+  }
+  .info-card-value.muted { color: var(--quick-silver); }
+
+  /* ── Map placeholder (delivery only) ───────────── */
+  .map-section {
+    background: var(--eerie-black-2);
+    border: 1px solid hsla(38,61%,73%,0.12);
+    margin-block-end: 24px;
+    overflow: hidden;
+    display: none;
+  }
+  .map-section.show { display: block; }
+  .map-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid hsla(38,61%,73%,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .map-header-title {
+    font-size: var(--fontSize-label-1);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--letterSpacing-3);
+    color: var(--gold-crayola);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* SVG map illustration */
+  .map-illustration {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(160deg, #0d1117 0%, #111820 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated delivery path */
+  .route-path {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: draw-route 3s ease forwards 0.5s;
+  }
+  @keyframes draw-route {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Moving vehicle dot */
+  .vehicle-dot {
+    animation: move-vehicle 3s ease forwards 0.5s;
+  }
+  @keyframes move-vehicle {
+    0%   { offset-distance: 0%; }
+    100% { offset-distance: 100%; }
+  }
+
+  /* ── Order items summary ────────────────────────── */
+  .order-items {
+    background: var(--eerie-black-2);
+    border: 1px solid hsla(38,61%,73%,0.12);
+    padding: 20px 20px;
+    margin-block-end: 24px;
+  }
+  .order-items-title {
+    font-size: var(--fontSize-label-1);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--letterSpacing-3);
+    color: var(--gold-crayola);
+    margin-block-end: 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .order-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 8px;
+    border-bottom: 1px solid hsla(38,61%,73%,0.07);
+    font-size: var(--fontSize-body-4);
+    gap: 12px;
+  }
+  .order-item-row:last-of-type { border-bottom: none; }
+  .order-item-row .item-name { color: var(--white); }
+  .order-item-row .item-qty  { color: var(--quick-silver); font-size: var(--fontSize-label-1); flex-shrink:0; }
+  .order-item-row .item-price { color: var(--gold-crayola); font-weight: var(--weight-bold); flex-shrink:0; }
+
+  .order-total-row {
+    display: flex;
+    justify-content: space-between;
+    padding-block-start: 14px;
+    margin-block-start: 8px;
+    border-top: 1px solid hsla(38,61%,73%,0.15);
+    font-size: var(--fontSize-body-4);
+    font-weight: var(--weight-bold);
+    color: var(--white);
+  }
+  .order-total-row span:last-child { color: var(--gold-crayola); font-size: var(--fontSize-body-3); }
+
+  /* ── Bottom actions ─────────────────────────────── */
+  .tracking-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-block-start: 8px;
+  }
+  .tracking-actions a,
+  .tracking-actions button {
+    flex: 1;
+    min-width: 160px;
+    padding: 13px;
+    text-align: center;
+    font-size: var(--fontSize-label-2);
+    font-family: var(--fontFamily-dm_sans);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--letterSpacing-5);
+    cursor: pointer;
+    transition: var(--transition-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .btn-track-primary {
+    background: var(--gold-crayola);
+    border: 2px solid var(--gold-crayola);
+    color: var(--smoky-black-1);
+  }
+  .btn-track-primary:hover { opacity: .85; }
+  .btn-track-secondary {
+    background: transparent;
+    border: 1px solid hsla(38,61%,73%,0.3);
+    color: var(--quick-silver);
+  }
+  .btn-track-secondary:hover { border-color: var(--gold-crayola); color: var(--gold-crayola); }
+
+  /* ── Progress bar (top of page) ─────────────────── */
+  .global-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--gold-crayola);
+    z-index: 9999;
+    transition: width 1s ease;
+    box-shadow: 0 0 8px hsla(38,61%,73%,0.5);
+  }
+
+  /* ── No order fallback ─────────────────────────── */
+  .no-order {
+    text-align: center;
+    padding: 80px 20px;
+  }
+  .no-order svg { color: hsla(38,61%,73%,0.2); margin: 0 auto 20px; display: block; }
+  .no-order h2 { font-family: var(--fontFamily-forum); font-size: var(--fontSize-headline-2); color: var(--white); margin-block-end: 10px; }
+  .no-order p  { color: var(--quick-silver); font-size: var(--fontSize-body-4); }
+  </style>
+</head>
+
+<body id="top">
+
+<!-- Top progress bar -->
+<div class="global-progress-bar" id="globalProgress" style="width:0%"></div>
+
+<!-- Header -->
+<header class="header active" data-header>
+  <div class="container">
+    <a href="../index.html" class="logo">
+      <img src="../assets/images/logo-header.svg" width="160" height="50" alt="Casa do Sabor">
+    </a>
+    <nav class="navbar" data-navbar>
+      <button class="close-btn" aria-label="fechar menu" data-nav-toggler>
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+      <a href="../index.html" class="logo"><img src="../assets/images/logo-header.svg" width="160" height="50" alt=""></a>
+      <ul class="navbar-list">
+        <li class="navbar-item"><a href="../index.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Início</span></a></li>
+        <li class="navbar-item"><a href="menu.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Ementas</span></a></li>
+        <li class="navbar-item"><a href="contact.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Contacto</span></a></li>
+      </ul>
+    </nav>
+    <div id="headerAuthArea">
+      <button class="btn-login-icon" onclick="openLoginModal()" aria-label="Entrar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </button>
+    </div>
+    <button class="nav-open-btn" aria-label="abrir menu" data-nav-toggler>
+      <span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span>
+    </button>
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
+</header>
+
+<!-- Login Modal -->
+<div class="login-modal-backdrop" id="loginModalBackdrop" onclick="handleBackdropClick(event)">
+  <button class="login-modal-close" onclick="closeLoginModal()">&#x2715;</button>
+  <div class="login-modal" id="loginModal">
+    <div class="lm-form-container lm-sign-in">
+      <div class="lm-form">
+        <h2>Bem-vindo</h2><p class="lm-subtitle">Iniciar Sessão</p>
+        <div class="lm-separator-row"><div class="lm-sep"></div><div class="lm-sep"></div><div class="lm-sep"></div></div>
+        <div class="lm-error" id="signInError"></div>
+        <input type="email" id="signInEmail" placeholder="O seu email" autocomplete="email">
+        <input type="password" id="signInPassword" placeholder="Palavra-passe" autocomplete="current-password">
+        <button class="lm-btn-primary" onclick="handleSignIn()">Entrar</button>
+      </div>
+    </div>
+    <div class="lm-form-container lm-sign-up">
+      <div class="lm-form">
+        <h2>Criar Conta</h2><p class="lm-subtitle">Registo</p>
+        <div class="lm-separator-row"><div class="lm-sep"></div><div class="lm-sep"></div><div class="lm-sep"></div></div>
+        <div class="lm-error" id="signUpError"></div>
+        <input type="text" id="signUpName" placeholder="O seu nome" autocomplete="name">
+        <input type="email" id="signUpEmail" placeholder="O seu email" autocomplete="email">
+        <input type="password" id="signUpPassword" placeholder="Palavra-passe" autocomplete="new-password">
+        <button class="lm-btn-primary" onclick="handleSignUp()">Registar</button>
+      </div>
+    </div>
+    <div class="lm-toggle-container">
+      <div class="lm-toggle">
+        <div class="lm-toggle-panel lm-toggle-left">
+          <h2>Já tem conta?</h2><div class="lm-gold-line"></div><p>Inicie sessão.</p>
+          <button class="lm-btn-ghost" onclick="toggleLoginModal(false)">Iniciar Sessão</button>
+        </div>
+        <div class="lm-toggle-panel lm-toggle-right">
+          <h2>Novo aqui?</h2><div class="lm-gold-line"></div><p>Crie uma conta.</p>
+          <button class="lm-btn-ghost" onclick="toggleLoginModal(true)">Criar Conta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TRACKING PAGE ══ -->
+<main class="tracking-page">
+  <div class="tracking-container" id="trackingContent">
+
+    <!-- No order fallback -->
+    <div class="no-order" id="noOrder" style="display:none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <h2>Nenhuma encomenda ativa</h2>
+      <p>Ainda não efetuou nenhuma encomenda.</p>
+      <a href="menu.html" class="btn btn-primary" style="margin:24px auto 0;display:flex;max-width:200px;justify-content:center;">
+        <span class="text text-1">Ver Ementa</span>
+        <span class="text text-2" aria-hidden="true">Ver Ementa</span>
+      </a>
+    </div>
+
+    <!-- Tracking content (populated by JS) -->
+    <div id="trackingMain" style="display:none">
+
+      <!-- Top info -->
+      <div class="tracking-top">
+        <div>
+          <div class="tracking-ref">Referência: <span id="trRef"></span></div>
+          <div class="tracking-date" id="trDate"></div>
+        </div>
+        <div id="trTypeBadge"></div>
+      </div>
+
+      <!-- Status hero -->
+      <div class="status-hero">
+        <div class="status-icon pulsing" id="statusIcon">
+          <svg id="statusIconSvg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></svg>
+        </div>
+        <p class="status-label" id="statusLabel"></p>
+        <p class="status-sublabel" id="statusSublabel"></p>
+        <div class="eta-badge" id="etaBadge">
+          <span class="eta-dot"></span>
+          Tempo estimado:&nbsp;<span class="eta-time" id="etaTime"></span>
+        </div>
+      </div>
+
+      <!-- Map (delivery only) -->
+      <div class="map-section" id="mapSection">
+        <div class="map-header">
+          <div class="map-header-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            A Sua Entrega
+          </div>
+          <span style="font-size:1.1rem;color:var(--quick-silver)" id="mapAddr"></span>
+        </div>
+        <div class="map-illustration">
+          <svg width="100%" height="200" viewBox="0 0 780 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <!-- Street grid background -->
+            <rect width="780" height="200" fill="#0d1117"/>
+            <line x1="0" y1="100" x2="780" y2="100" stroke="#1a2233" stroke-width="18"/>
+            <line x1="390" y1="0" x2="390" y2="200" stroke="#1a2233" stroke-width="12"/>
+            <line x1="130" y1="0" x2="130" y2="200" stroke="#1a2233" stroke-width="8"/>
+            <line x1="650" y1="0" x2="650" y2="200" stroke="#1a2233" stroke-width="8"/>
+            <line x1="0" y1="50" x2="780" y2="50" stroke="#1a2233" stroke-width="6"/>
+            <line x1="0" y1="150" x2="780" y2="150" stroke="#1a2233" stroke-width="6"/>
+            <!-- City blocks -->
+            <rect x="10"  y="10"  width="100" height="30" fill="#141c28" rx="2"/>
+            <rect x="145" y="10"  width="220" height="30" fill="#141c28" rx="2"/>
+            <rect x="400" y="10"  width="120" height="30" fill="#141c28" rx="2"/>
+            <rect x="540" y="10"  width="100" height="30" fill="#141c28" rx="2"/>
+            <rect x="10"  y="58"  width="100" height="30" fill="#141c28" rx="2"/>
+            <rect x="145" y="58"  width="220" height="30" fill="#141c28" rx="2"/>
+            <rect x="400" y="58"  width="230" height="30" fill="#141c28" rx="2"/>
+            <rect x="10"  y="110" width="100" height="30" fill="#141c28" rx="2"/>
+            <rect x="145" y="110" width="220" height="30" fill="#141c28" rx="2"/>
+            <rect x="400" y="110" width="230" height="30" fill="#141c28" rx="2"/>
+            <rect x="10"  y="158" width="100" height="32" fill="#141c28" rx="2"/>
+            <rect x="145" y="158" width="220" height="32" fill="#141c28" rx="2"/>
+            <rect x="400" y="158" width="230" height="32" fill="#141c28" rx="2"/>
+
+            <!-- Route path (restaurant → delivery) -->
+            <path id="routeSvg"
+              d="M 90,100 L 200,100 L 200,50 L 390,50 L 390,100 L 600,100 L 600,150 L 700,150"
+              fill="none" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+              stroke-dasharray="8 4" class="route-path" opacity="0.8"/>
+
+            <!-- Restaurant pin (origin) -->
+            <circle cx="90" cy="100" r="10" fill="#C9A84C"/>
+            <text x="90" y="104" text-anchor="middle" font-size="10" fill="#1A1208" font-weight="bold">R</text>
+            <text x="90" y="88" text-anchor="middle" font-size="9" fill="#C9A84C">Restaurante</text>
+
+            <!-- Delivery pin (destination) -->
+            <circle cx="700" cy="150" r="10" fill="#E2C06A"/>
+            <path d="M700 140 C700 140 706 148 700 155 C694 148 700 140 700 140Z" fill="#E2C06A"/>
+            <circle cx="700" cy="148" r="3" fill="#1A1208"/>
+            <text x="700" y="168" text-anchor="middle" font-size="9" fill="#E2C06A">Destino</text>
+
+            <!-- Animated vehicle -->
+            <g id="vehicleDot">
+              <circle cx="90" cy="100" r="7" fill="#fff" opacity="0.95">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0.5s"
+                  path="M 90,100 L 200,100 L 200,50 L 390,50 L 390,100 L 600,100 L 600,150 L 700,150"/>
+              </circle>
+              <circle cx="90" cy="100" r="12" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.3">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0.5s"
+                  path="M 90,100 L 200,100 L 200,50 L 390,50 L 390,100 L 600,100 L 600,150 L 700,150"/>
+              </circle>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Progress steps -->
+      <div class="progress-track">
+        <p class="progress-track-title">Estado da Encomenda</p>
+        <ul class="steps-list" id="stepsList"></ul>
+      </div>
+
+      <!-- Info cards grid -->
+      <div class="info-grid" id="infoGrid"></div>
+
+      <!-- Order items -->
+      <div class="order-items">
+        <p class="order-items-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          Itens Encomendados
+        </p>
+        <div id="orderItemsList"></div>
+        <div class="order-total-row">
+          <span>Total</span>
+          <span id="orderTotalDisplay"></span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="tracking-actions">
+        <a href="menu.html" class="btn-track-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          Nova Encomenda
+        </a>
+        <a href="../index.html" class="btn-track-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Página Inicial
+        </a>
+      </div>
+
+    </div><!-- /trackingMain -->
+  </div>
+</main>
+
+<script src="../js/header.js"></script>
+<script src="../js/login.js"></script>
+
+<script>
+(function () {
+  "use strict";
+
+  // ── Order stages ────────────────────────────────────────
+  const STEPS_DELIVERY = [
+    {
+      id: "received",
+      name: "Encomenda Recebida",
+      desc: "A sua encomenda foi confirmada e está a ser processada.",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      etaMin: 0,
+    },
+    {
+      id: "preparing",
+      name: "Em Preparação",
+      desc: "Os nossos chefs estão a preparar a sua encomenda com todo o cuidado.",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7c-1.53 0-2.94-.5-4.07-1.33"/></svg>`,
+      etaMin: 5,
+    },
+    {
+      id: "ontheway",
+      name: "A Caminho",
+      desc: "O seu estafeta recolheu a encomenda e está a caminho de si.",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+      etaMin: 15,
+    },
+    {
+      id: "delivered",
+      name: "Entregue",
+      desc: "A sua encomenda foi entregue. Bom apetite!",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      etaMin: 45,
+    },
+  ];
+
+  const STEPS_TAKEAWAY = [
+    {
+      id: "received",
+      name: "Encomenda Recebida",
+      desc: "A sua encomenda foi confirmada.",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      etaMin: 0,
+    },
+    {
+      id: "preparing",
+      name: "Em Preparação",
+      desc: "A sua encomenda está a ser preparada.",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7c-1.53 0-2.94-.5-4.07-1.33"/></svg>`,
+      etaMin: 5,
+    },
+    {
+      id: "ready",
+      name: "Pronto para Levantar",
+      desc: "A sua encomenda está pronta! Venha buscá-la ao restaurante.",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+      etaMin: 20,
+    },
+    {
+      id: "collected",
+      name: "Levantado",
+      desc: "Encomenda levantada. Bom apetite!",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      etaMin: 30,
+    },
+  ];
+
+  // Status hero icons per step
+  const HERO_ICONS = {
+    received:  `<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.1 10.78 19.79 19.79 0 0112 2.18 2 2 0 0114 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L18 8a16 16 0 006.92 6.92l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>`,
+    preparing: `<path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7c-1.53 0-2.94-.5-4.07-1.33"/>`,
+    ontheway:  `<rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>`,
+    ready:     `<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>`,
+    delivered: `<polyline points="20 6 9 17 4 12"/>`,
+    collected: `<polyline points="20 6 9 17 4 12"/>`,
+  };
+
+  // ── Load order ──────────────────────────────────────────
+  let order = null;
+  try {
+    order = JSON.parse(localStorage.getItem("casaDoSaborActiveOrder"));
+  } catch(e) {}
+
+  if (!order) {
+    document.getElementById("noOrder").style.display = "block";
+    return;
+  }
+
+  document.getElementById("trackingMain").style.display = "block";
+
+  const isDelivery = order.delivery === "delivery";
+  const steps      = isDelivery ? STEPS_DELIVERY : STEPS_TAKEAWAY;
+
+  // ── Reference & date ────────────────────────────────────
+  document.getElementById("trRef").textContent  = order.ref;
+  document.getElementById("trDate").textContent = order.date;
+  document.getElementById("trTypeBadge").innerHTML = `
+    <span style="display:inline-flex;align-items:center;gap:7px;background:hsla(38,61%,73%,0.1);border:1px solid hsla(38,61%,73%,0.25);padding:6px 14px;font-size:1.2rem;color:var(--gold-crayola);font-weight:700;text-transform:uppercase;letter-spacing:.08em;">
+      ${isDelivery
+        ? `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Entrega ao Domicílio`
+        : `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Take-Away`}
+    </span>`;
+
+  // ── Simulate order progress ──────────────────────────────
+  // Calculate elapsed seconds since order was placed
+  const orderTime   = new Date(order.date.split(",")[0].split("/").reverse().join("-") + "T" +
+                       (order.date.split(",")[1] || " 00:00").trim()).getTime() || Date.now();
+  const elapsedSec  = Math.floor((Date.now() - orderTime) / 1000);
+
+  // Determine current step based on elapsed time
+  // Step transitions: 0s=received, 120s=preparing, 900s=ontheway/ready, 2700s=delivered/collected
+  const stepBreaks = [0, 120, 900, 2700]; // seconds
+  let currentStep = 0;
+  for (let i = 0; i < stepBreaks.length; i++) {
+    if (elapsedSec >= stepBreaks[i]) currentStep = i;
+  }
+
+  const activeStepData = steps[currentStep];
+  const isFinished     = currentStep >= steps.length - 1;
+
+  // ── Update hero ──────────────────────────────────────────
+  const iconSvg = document.getElementById("statusIconSvg");
+  iconSvg.innerHTML = HERO_ICONS[activeStepData.id] || HERO_ICONS.received;
+  if (isFinished) document.getElementById("statusIcon").classList.remove("pulsing");
+
+  document.getElementById("statusLabel").textContent   = activeStepData.name;
+  document.getElementById("statusSublabel").innerHTML  =
+    isDelivery
+      ? (order.address ? `A entregar em <strong>${order.address.morada}, ${order.address.localidade}</strong>` : "A processar entrega...")
+      : `Levantar em <strong>Rua do Restaurante, Lisboa</strong>`;
+
+  // ETA countdown
+  const totalSeconds = isDelivery ? 45*60 : 25*60;
+  const remaining    = Math.max(0, totalSeconds - elapsedSec);
+  const remMin       = Math.floor(remaining / 60);
+  const remSec       = remaining % 60;
+  const etaEl        = document.getElementById("etaTime");
+
+  if (isFinished) {
+    document.getElementById("etaBadge").innerHTML =
+      `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>&nbsp;Entregue com sucesso!`;
+  } else {
+    etaEl.textContent = `${remMin}min ${String(remSec).padStart(2,"0")}s`;
+    // Live countdown
+    const timer = setInterval(() => {
+      const sec  = Math.max(0, totalSeconds - Math.floor((Date.now() - Date.now() + remaining * 1000 - (Date.now() - Date.now())) / 1000));
+      const el   = document.getElementById("etaTime");
+      if (!el) { clearInterval(timer); return; }
+      const r    = Math.max(0, remaining - Math.floor((Date.now() - Date.now()) / 1000));
+      const m2   = Math.floor(r/60), s2 = r%60;
+      el.textContent = `${m2}min ${String(s2).padStart(2,"0")}s`;
+    }, 1000);
+    // Simpler live timer
+    let secLeft = remaining;
+    setInterval(() => {
+      if (secLeft <= 0) return;
+      secLeft--;
+      const el = document.getElementById("etaTime");
+      if (el) el.textContent = `${Math.floor(secLeft/60)}min ${String(secLeft%60).padStart(2,"0")}s`;
+    }, 1000);
+  }
+
+  // ── Progress bar (top) ───────────────────────────────────
+  const pct = Math.min(100, Math.round(((currentStep + 1) / steps.length) * 100));
+  document.getElementById("globalProgress").style.width = pct + "%";
+
+  // ── Build steps list ─────────────────────────────────────
+  const stepsEl = document.getElementById("stepsList");
+  steps.forEach((step, idx) => {
+    const isDone   = idx < currentStep;
+    const isActive = idx === currentStep;
+    const stepTime = isDone || isActive
+      ? new Date(Date.now() - (stepBreaks[steps.length-1-idx] || 0) * 1000)
+          .toLocaleTimeString("pt-PT", { hour:"2-digit", minute:"2-digit" })
+      : "";
+
+    stepsEl.innerHTML += `
+      <li class="step-item ${isDone ? "done" : ""} ${isActive ? "active" : ""}">
+        <div class="step-circle">${step.icon}</div>
+        <div class="step-content">
+          <p class="step-name">${step.name}</p>
+          <p class="step-desc">${step.desc}</p>
+          ${stepTime ? `<p class="step-time">${stepTime}</p>` : ""}
+        </div>
+      </li>`;
+  });
+
+  // ── Map section (delivery only) ──────────────────────────
+  if (isDelivery) {
+    document.getElementById("mapSection").classList.add("show");
+    if (order.address) {
+      document.getElementById("mapAddr").textContent =
+        `${order.address.morada || ""}, ${order.address.localidade || ""}`;
+    }
+  }
+
+  // ── Info cards ───────────────────────────────────────────
+  const payLabels = { card:"Cartão Bancário", mbway:"MB Way", multibanco:"Multibanco", cash:"Numerário", numerario:"Numerário" };
+  const infoGrid  = document.getElementById("infoGrid");
+
+  const cards = [
+    {
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`,
+      label: "Pagamento",
+      value: payLabels[order.payment] || order.payment,
+    },
+    {
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
+      label: "Total",
+      value: `${parseFloat(order.total).toFixed(2)}€`,
+    },
+  ];
+
+  if (isDelivery && order.address) {
+    cards.push({
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      label: "Morada de Entrega",
+      value: `${order.address.morada}${order.address.andar ? ", " + order.address.andar : ""}<br>${order.address.codPostal} ${order.address.localidade}`,
+      muted: true,
+    });
+    cards.push({
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 10.78 19.79 19.79 0 016 2.18 2 2 0 018 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L12 8a16 16 0 006.92 6.92l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`,
+      label: "Contacto",
+      value: order.address.telefone || "—",
+    });
+  } else if (!isDelivery) {
+    cards.push({
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      label: "Local de Levantamento",
+      value: "Rua do Restaurante<br>Lisboa 5555, Portugal",
+      muted: true,
+    });
+    cards.push({
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+      label: "Horário",
+      value: "Diariamente 12:00 — 00:00",
+    });
+  }
+
+  cards.forEach(card => {
+    infoGrid.innerHTML += `
+      <div class="info-card">
+        <div class="info-card-label">${card.icon} ${card.label}</div>
+        <div class="info-card-value ${card.muted ? "muted" : ""}">${card.value}</div>
+      </div>`;
+  });
+
+  // ── Order items ──────────────────────────────────────────
+  const itemsEl = document.getElementById("orderItemsList");
+  if (order.cart && order.cart.length) {
+    order.cart.forEach(item => {
+      itemsEl.innerHTML += `
+        <div class="order-item-row">
+          <span class="item-name">${item.name}</span>
+          <span class="item-qty">× ${item.qty}</span>
+          <span class="item-price">${(item.price * item.qty).toFixed(2)}€</span>
+        </div>`;
+    });
+    if (order.fee > 0) {
+      itemsEl.innerHTML += `
+        <div class="order-item-row">
+          <span class="item-name" style="color:var(--quick-silver)">Taxa de entrega</span>
+          <span class="item-qty"></span>
+          <span class="item-price">${parseFloat(order.fee).toFixed(2)}€</span>
+        </div>`;
+    }
+  }
+  document.getElementById("orderTotalDisplay").textContent = `${parseFloat(order.total).toFixed(2)}€`;
+
+})();
+</script>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

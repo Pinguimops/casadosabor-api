@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — Casa do Sabor</title>
+  <link rel="shortcut icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/buttons.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/sections.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" href="../css/cart.css">
+  <link rel="stylesheet" href="../css/backtotop.css">
+
+  <style>
+    .page-hero {
+      min-height: 38vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-block-start: 160px;
+      padding-block-end: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('../assets/images/testimonial-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.2;
+      z-index: 0;
+    }
+    .page-hero .container { position: relative; z-index: 1; }
+
+    /* Contact info cards */
+    .contact-cards {
+      display: grid;
+      gap: 24px;
+      margin-block-end: 70px;
+    }
+    @media (min-width: 768px)  { .contact-cards { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1200px) { .contact-cards { grid-template-columns: repeat(4, 1fr); } }
+
+    .contact-card {
+      background-color: var(--eerie-black-2);
+      padding: 36px 28px;
+      text-align: center;
+      border-bottom: 3px solid transparent;
+      transition: border-color var(--transition-2), transform var(--transition-2);
+    }
+    .contact-card:hover { border-color: var(--gold-crayola); transform: translateY(-4px); }
+
+    .contact-card ion-icon {
+      font-size: 3.2rem;
+      color: var(--gold-crayola);
+      margin-block-end: 16px;
+      display: block;
+      margin-inline: auto;
+    }
+    .contact-card .card-title {
+      font-family: var(--fontFamily-forum);
+      font-size: var(--fontSize-title-2);
+      color: var(--white);
+      margin-block-end: 10px;
+    }
+    .contact-card p,
+    .contact-card a {
+      color: var(--quick-silver);
+      font-size: var(--fontSize-body-4);
+      line-height: var(--lineHeight-3);
+      display: block;
+      transition: var(--transition-1);
+    }
+    .contact-card a:hover { color: var(--gold-crayola); }
+
+    /* Map placeholder */
+    .map-wrap {
+      width: 100%;
+      height: 380px;
+      background-color: var(--eerie-black-2);
+      overflow: hidden;
+      position: relative;
+      margin-block-end: 70px;
+    }
+    .map-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(1) invert(0.9) contrast(0.8);
+    }
+    .map-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, var(--eerie-black-1));
+      pointer-events: none;
+    }
+  </style>
+  <link rel="stylesheet" href="../css/alignment.css">
+</head>
+
+<body id="top">
+
+  <div class="topbar">
+    <div class="container">
+      <address class="topbar-item">
+        <div class="icon"><ion-icon name="location-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Rua do Restaurante, Cidade Deliciosa, Lisboa 5555, Portugal</span>
+      </address>
+      <div class="separator"></div>
+      <div class="topbar-item item-2">
+        <div class="icon"><ion-icon name="time-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Diariamente: 8.00 às 22.00</span>
+      </div>
+      <a href="tel:+11234567890" class="topbar-item link">
+        <div class="icon"><ion-icon name="call-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">123 456 7890</span>
+      </a>
+      <div class="separator"></div>
+      <a href="mailto:reservas@restaurante.com" class="topbar-item link">
+        <div class="icon"><ion-icon name="mail-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">reservas@restaurante.com</span>
+      </a>
+    </div>
+  </div>
+
+  <header class="header" data-header>
+    <div class="container">
+      <a href="../index.html" class="logo"><img src="../assets/images/logo-header.svg" width="160" height="50" alt="Casa do Sabor"></a>
+      <nav class="navbar" data-navbar>
+        <button class="close-btn" aria-label="fechar menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+        <a href="../index.html" class="logo"><img src="../assets/images/logo-header.svg" width="160" height="50" alt=""></a>
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="../index.html#home" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Início</span></a></li>
+          <li class="navbar-item"><a href="menu.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Ementas</span></a></li>
+          <li class="navbar-item"><a href="about.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Sobre Nós</span></a></li>
+          <li class="navbar-item"><a href="chefs.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Os Nossos Chefs</span></a></li>
+          <li class="navbar-item"><a href="contact.html" class="navbar-link hover-underline active"><div class="separator"></div><span class="span">Contacto</span></a></li>
+        </ul>
+        <div class="text-center">
+          <p class="headline-1 navbar-title">Visite-nos</p>
+          <address class="body-4">Rua do Restaurante, Cidade Deliciosa,<br>Lisboa 5555, Portugal</address>
+          <p class="body-4 navbar-text">Aberto: 9.30 às 14.30</p>
+          <a href="mailto:reservas@grilli.com" class="body-4 sidebar-link">reservas@grilli.com</a>
+          <div class="separator"></div>
+          <p class="contact-label">Pedido de Reserva</p>
+          <a href="tel:+351123123456" class="body-1 contact-number hover-underline">+351-123-123456</a>
+        </div>
+      </nav>
+      <div id="headerAuthArea">
+        <button class="btn-login-icon" onclick="openLoginModal()" aria-label="Entrar na conta" title="Entrar / Registar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="btn-cart-icon" id="btnCartOpen" onclick="openCart()" aria-label="Carrinho" title="Carrinho">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </button>
+      <a href="#reserva" class="btn btn-secondary">
+        <span class="text text-1">Encontrar uma Mesa</span>
+        <span class="text text-2" aria-hidden="true">Encontrar uma Mesa</span>
+      </a>
+      <button class="nav-open-btn" aria-label="abrir menu" data-nav-toggler>
+        <span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span>
+      </button>
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+  <!-- Login Modal -->
+  <div class="login-modal-backdrop" id="loginModalBackdrop" onclick="handleBackdropClick(event)">
+    <!-- Close button OUTSIDE modal so overflow:hidden cannot trap it -->
+    <button class="login-modal-close" id="loginModalCloseBtn" onclick="closeLoginModal()" aria-label="Fechar">&#x2715;</button>
+    <div class="login-modal" id="loginModal">
+      <div class="lm-form-container lm-sign-in">
+        <div class="lm-form">
+          <h2>Bem-vindo</h2><p class="lm-subtitle">Iniciar Sessão</p>
+          <div class="lm-separator-row"><div class="lm-sep"></div><div class="lm-sep"></div><div class="lm-sep"></div></div>
+          <div class="lm-error" id="signInError"></div>
+          <input type="email" id="signInEmail" placeholder="O seu email" autocomplete="email">
+          <input type="password" id="signInPassword" placeholder="Palavra-passe" autocomplete="current-password">
+          <a href="#" onclick="return false;" style="align-self:flex-end;margin-top:-6px;">Esqueceu a palavra-passe?</a>
+          <button class="lm-btn-primary" onclick="handleSignIn()">Entrar</button>
+        </div>
+      </div>
+      <div class="lm-form-container lm-sign-up">
+        <div class="lm-form">
+          <h2>Criar Conta</h2><p class="lm-subtitle">Registo</p>
+          <div class="lm-separator-row"><div class="lm-sep"></div><div class="lm-sep"></div><div class="lm-sep"></div></div>
+          <div class="lm-error" id="signUpError"></div>
+          <input type="text" id="signUpName" placeholder="O seu nome" autocomplete="name">
+          <input type="email" id="signUpEmail" placeholder="O seu email" autocomplete="email">
+          <input type="password" id="signUpPassword" placeholder="Palavra-passe (mín. 6 caracteres)" autocomplete="new-password">
+          <button class="lm-btn-primary" onclick="handleSignUp()">Registar</button>
+        </div>
+      </div>
+      <div class="lm-toggle-container">
+        <div class="lm-toggle">
+          <div class="lm-toggle-panel lm-toggle-left">
+            <h2>Já tem conta?</h2><div class="lm-gold-line"></div>
+            <p>Inicie sessão para aceder às suas reservas.</p>
+            <button class="lm-btn-ghost" onclick="toggleLoginModal(false)">Iniciar Sessão</button>
+          </div>
+          <div class="lm-toggle-panel lm-toggle-right">
+            <h2>Novo aqui?</h2><div class="lm-gold-line"></div>
+            <p>Crie uma conta e desfrute de ofertas exclusivas.</p>
+            <button class="lm-btn-ghost" onclick="toggleLoginModal(true)">Criar Conta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <p class="label-2 section-subtitle">Estamos aqui para si</p>
+        <h1 class="headline-1">Contacto</h1>
+      </div>
+    </section>
+
+    <section class="section" aria-label="contacto">
+      <div class="container">
+
+        <!-- Contact info cards -->
+        <div class="contact-cards">
+          <div class="contact-card">
+            <ion-icon name="location-outline"></ion-icon>
+            <p class="card-title">Morada</p>
+            <p>Rua do Restaurante<br>Cidade Deliciosa<br>Lisboa 5555, Portugal</p>
+          </div>
+          <div class="contact-card">
+            <ion-icon name="call-outline"></ion-icon>
+            <p class="card-title">Telefone</p>
+            <a href="tel:+351123123456">+351-123-123456</a>
+            <a href="tel:+351987654321">+351-987-654321</a>
+          </div>
+          <div class="contact-card">
+            <ion-icon name="mail-outline"></ion-icon>
+            <p class="card-title">Email</p>
+            <a href="mailto:info@casadosabor.pt">info@casadosabor.pt</a>
+            <a href="mailto:reservas@casadosabor.pt">reservas@casadosabor.pt</a>
+          </div>
+          <div class="contact-card">
+            <ion-icon name="time-outline"></ion-icon>
+            <p class="card-title">Horário</p>
+            <p>Seg – Sex: 08h – 22h</p>
+            <p>Sab – Dom: 09h – 23h</p>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12440.282399718566!2d-9.142685!3d38.736946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd19331a61e4f33b%3A0x400ebbde49036d0!2sLisboa!5e0!3m2!1spt!2spt!4v1680000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localização Casa do Sabor">
+          </iframe>
+          <div class="map-overlay"></div>
+        </div>
+
+        <!-- Reservation form -->
+        <div id="reserva" class="form reservation-form bg-black-10">
+          <form action="" class="form-left" id="reservationForm">
+            <h2 class="headline-1 text-center">Reserva Online</h2>
+            <p class="form-text text-center">
+              Pedido de Reserva <a href="tel:+351123123456" class="link">+351-123-123456</a>
+              ou preencha o formulário abaixo
+            </p>
+            <div class="form-feedback" id="reservaFeedback"></div>
+            <div class="input-wrapper">
+              <input type="text" name="name" placeholder="O seu Nome" autocomplete="off" class="input-field">
+              <input type="tel" name="phone" placeholder="Número de Telefone" autocomplete="off" class="input-field">
+            </div>
+            <div class="input-wrapper">
+              <div class="icon-wrapper">
+                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                <select name="person" class="input-field">
+                  <option value="">Nº de Pessoas</option>
+                  <option value="1">1 Pessoa</option>
+                  <option value="2">2 Pessoas</option>
+                  <option value="3">3 Pessoas</option>
+                  <option value="4">4 Pessoas</option>
+                  <option value="5">5 Pessoas</option>
+                  <option value="6">6 Pessoas</option>
+                  <option value="7+">7+ Pessoas</option>
+                </select>
+                <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+              </div>
+              <div class="icon-wrapper">
+                <ion-icon name="calendar-clear-outline" aria-hidden="true"></ion-icon>
+                <input type="date" name="reservation-date" class="input-field">
+                <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+              </div>
+              <div class="icon-wrapper">
+                <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                <select name="time" class="input-field">
+                  <option value="">Hora</option>
+                  <option value="08:00">08:00h</option>
+                  <option value="09:00">09:00h</option>
+                  <option value="10:00">10:00h</option>
+                  <option value="11:00">11:00h</option>
+                  <option value="12:00">12:00h</option>
+                  <option value="13:00">13:00h</option>
+                  <option value="14:00">14:00h</option>
+                  <option value="15:00">15:00h</option>
+                  <option value="16:00">16:00h</option>
+                  <option value="17:00">17:00h</option>
+                  <option value="18:00">18:00h</option>
+                  <option value="19:00">19:00h</option>
+                  <option value="20:00">20:00h</option>
+                  <option value="21:00">21:00h</option>
+                  <option value="22:00">22:00h</option>
+                </select>
+                <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+              </div>
+            </div>
+            <textarea name="mensagem" placeholder="Pedidos especiais ou mensagem..." autocomplete="off" class="input-field"></textarea>
+            <button type="submit" class="btn btn-secondary">
+              <span class="text text-1">Reserve Mesa</span>
+              <span class="text text-2" aria-hidden="true">Reserve Mesa</span>
+            </button>
+          </form>
+
+          <div class="form-right text-center" style="background-image: url('../assets/images/form-pattern.png')">
+            <h2 class="headline-1 text-center">Contacte-nos</h2>
+            <p class="contact-label">Pedido de Reserva</p>
+            <a href="tel:+351123123456" class="body-1 contact-number hover-underline">+351-123-123456</a>
+            <div class="separator"></div>
+            <p class="contact-label">Localização</p>
+            <address class="body-4">Rua do Restaurante, Cidade Deliciosa,<br>Lisboa 5555, Portugal</address>
+            <p class="contact-label">Hora de almoço</p>
+            <p class="body-4">Segunda-feira a Domingo<br>das 11:00h às 14:30h</p>
+            <p class="contact-label">Hora de jantar</p>
+            <p class="body-4">Segunda-feira a Domingo<br>das 17:00h às 22:00h</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer section has-bg-image text-center" style="background-image: url('../assets/images/footer-bg.jpg');">
+    <div class="container">
+      <div class="footer-top grid-list">
+        <div class="footer-brand has-before has-after">
+          <a href="../index.html" class="logo"><img src="../assets/images/logo.svg" width="160" height="50" loading="lazy" alt="Casa do Sabor"></a>
+          <address class="body-4">Rua do Restaurante, Cidade Deliciosa, Lisboa 5555, Portugal</address>
+          <a href="mailto:booking@grilli.com" class="body-4 contact-link">booking@grilli.com</a>
+          <a href="tel:+351123123456" class="body-4 contact-link">Reservas: +351-123-123456</a>
+          <p class="body-4">Aberto: 09:00h - 22:00h</p>
+          <div class="wrapper"><div class="separator"></div><div class="separator"></div><div class="separator"></div></div>
+          <p class="title-1">Novidades & Ofertas</p>
+          <p class="label-1">Subscreva e receba <span class="span">25% desconto</span></p>
+          <form action="" class="input-wrapper">
+            <div class="icon-wrapper">
+              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+              <input type="email" name="email_address" placeholder="O seu Email" autocomplete="off" class="input-field">
+            </div>
+            <button type="submit" class="btn btn-secondary">
+              <span class="text text-1">Subscreva</span>
+              <span class="text text-2" aria-hidden="true">Subscreva</span>
+            </button>
+          </form>
+        </div>
+        <ul class="footer-list">
+          <li><a href="../index.html" class="label-2 footer-link hover-underline">Início</a></li>
+          <li><a href="menu.html" class="label-2 footer-link hover-underline">Ementas</a></li>
+          <li><a href="about.html" class="label-2 footer-link hover-underline">Sobre Nós</a></li>
+          <li><a href="chefs.html" class="label-2 footer-link hover-underline">Os Nossos Chefs</a></li>
+          <li><a href="contact.html" class="label-2 footer-link hover-underline">Contacto</a></li>
+        </ul>
+        <ul class="footer-list">
+          <li><a href="#" class="label-2 footer-link hover-underline">Facebook</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Instagram</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">TikTok</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Youtube</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Google Map</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#top" class="back-top-btn" aria-label="Voltar ao topo" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <script src="../js/header.js"></script>
+  <script src="../js/backtotop.js"></script>
+  <script src="../js/login.js"></script>
+  <script src="../js/newsletter.js"></script>
+  <script src="../js/reservation.js"></script>
+
+  <!-- ══ CART DRAWER ══ -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho">
+    <div class="cart-header">
+      <h2 class="cart-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        O Meu Carrinho
+      </h2>
+      <button class="cart-close" onclick="closeCart()" aria-label="Fechar">&#x2715;</button>
+    </div>
+    <div class="cart-empty" id="cartEmpty">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <p>O seu carrinho está vazio.</p>
+      <a href="menu.html" class="btn btn-primary" style="margin-top:20px;margin-inline:auto;" onclick="closeCart()">
+        <span class="text text-1">Ver Ementa</span>
+        <span class="text text-2" aria-hidden="true">Ver Ementa</span>
+      </a>
+    </div>
+    <ul class="cart-list" id="cartList"></ul>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">0.00€</span>
+      </div>
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">0.00€</span>
+      </div>
+      <button class="cart-checkout-btn" onclick="goToCheckout()">Finalizar Encomenda</button>
+      <button class="cart-clear-btn" onclick="clearCart()">Limpar Carrinho</button>
+    </div>
+  </aside>
+  <div class="cart-toast" id="cartToast"></div>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/db.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

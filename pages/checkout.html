@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Encomenda — Casa do Sabor</title>
+  <link rel="shortcut icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/buttons.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" href="../css/cart.css">
+  <link rel="stylesheet" href="../css/backtotop.css">
+
+  <style>
+    body { min-height: 100vh; }
+
+    /* Page layout */
+    .checkout-page {
+      padding-block-start: 140px;
+      padding-block-end: 80px;
+      min-height: 100vh;
+    }
+
+    .checkout-wrap {
+      max-width: 900px;
+      margin-inline: auto;
+      padding-inline: 20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    @media (min-width: 900px) {
+      .checkout-wrap { grid-template-columns: 1fr 360px; align-items: start; }
+    }
+
+    /* Steps breadcrumb */
+    .checkout-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-block-end: 36px;
+      font-size: var(--fontSize-label-1);
+      text-transform: uppercase;
+      letter-spacing: var(--letterSpacing-3);
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: hsla(0,0%,50%,0.45);
+      font-weight: var(--weight-bold);
+    }
+    .step.active { color: var(--gold-crayola); }
+    .step.done   { color: hsla(38,61%,73%,0.6); }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .step.active .step-num { background: var(--gold-crayola); color: var(--smoky-black-1); border-color: var(--gold-crayola); }
+    .step.done   .step-num { background: hsla(38,61%,73%,0.15); }
+    .step-sep { width: 32px; height: 1px; background: hsla(0,0%,40%,0.3); margin-inline: 6px; flex-shrink: 0; }
+
+    /* Panels */
+    .checkout-panel {
+      background: var(--eerie-black-2);
+      border: 1px solid hsla(38,61%,73%,0.12);
+      padding: 32px 28px;
+      display: none;
+    }
+    .checkout-panel.active { display: block; animation: panelIn .35s ease; }
+    @keyframes panelIn { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
+
+    .panel-title {
+      font-family: var(--fontFamily-forum);
+      font-size: var(--fontSize-headline-2);
+      color: var(--white);
+      margin-block-end: 6px;
+    }
+    .panel-subtitle {
+      color: var(--quick-silver);
+      font-size: var(--fontSize-label-1);
+      margin-block-end: 28px;
+    }
+
+    /* Delivery type cards */
+    .delivery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-block-end: 28px;
+    }
+    @media (max-width: 500px) { .delivery-grid { grid-template-columns: 1fr; } }
+
+    .delivery-card {
+      border: 2px solid hsla(38,61%,73%,0.2);
+      padding: 24px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-1);
+      background: transparent;
+      position: relative;
+    }
+    .delivery-card:hover { border-color: var(--gold-crayola); }
+    .delivery-card.selected {
+      border-color: var(--gold-crayola);
+      background: hsla(38,61%,73%,0.08);
+    }
+    .delivery-card.selected .delivery-check {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .delivery-check {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 20px; height: 20px;
+      background: var(--gold-crayola);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transform: scale(0);
+      transition: all var(--transition-1);
+      color: var(--smoky-black-1);
+      font-size: 1.1rem;
+      font-weight: var(--weight-bold);
+    }
+    .delivery-icon {
+      color: var(--gold-crayola);
+      margin-block-end: 12px;
+      display: flex;
+      justify-content: center;
+    }
+    .delivery-card h3 {
+      font-family: var(--fontFamily-forum);
+      font-size: var(--fontSize-title-2);
+      color: var(--white);
+      margin-block-end: 6px;
+    }
+    .delivery-card p {
+      color: var(--quick-silver);
+      font-size: var(--fontSize-label-1);
+      line-height: var(--lineHeight-3);
+    }
+
+    /* Address form */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .form-group { margin-block-end: 18px; }
+    .form-group-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-block-end: 18px;
+    }
+    .form-group-row3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin-block-end: 18px;
+    }
+    @media (max-width: 560px) {
+      .form-group-row  { grid-template-columns: 1fr; }
+      .form-group-row3 { grid-template-columns: 1fr 1fr; }
+    }
+
+    .field-label {
+      display: block;
+      font-size: var(--fontSize-label-1);
+      font-weight: var(--weight-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--letterSpacing-3);
+      color: var(--gold-crayola);
+      margin-block-end: 8px;
+    }
+    .field-label span { color: #e57373; }
+
+    .co-input {
+      width: 100%;
+      background: hsla(210,4%,8%,0.8);
+      color: var(--white);
+      border: 1px solid hsla(38,61%,73%,0.18);
+      padding: 12px 16px;
+      font-size: var(--fontSize-label-1);
+      font-family: var(--fontFamily-dm_sans);
+      outline: none;
+      transition: border-color var(--transition-2);
+      display: block;
+    }
+    .co-input::placeholder { color: var(--quick-silver); opacity: .5; }
+    .co-input:focus { border-color: var(--gold-crayola); }
+    .co-input.error { border-color: #e57373; }
+
+    .field-error {
+      font-size: 1.1rem;
+      color: #e57373;
+      margin-block-start: 4px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* Payment methods */
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+      margin-block-end: 28px;
+    }
+    .payment-card {
+      border: 2px solid hsla(38,61%,73%,0.2);
+      padding: 18px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-1);
+      background: transparent;
+      position: relative;
+    }
+    .payment-card:hover   { border-color: var(--gold-crayola); }
+    .payment-card.selected {
+      border-color: var(--gold-crayola);
+      background: hsla(38,61%,73%,0.08);
+    }
+    .payment-check {
+      position: absolute; top: 8px; right: 8px;
+      width: 18px; height: 18px;
+      background: var(--gold-crayola); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0);
+      transition: all var(--transition-1);
+      color: var(--smoky-black-1); font-size: 1rem; font-weight: 700;
+    }
+    .payment-card.selected .payment-check { opacity:1; transform:scale(1); }
+    .payment-icon { color: var(--gold-crayola); display:flex; justify-content:center; margin-block-end:10px; }
+    .payment-card h4 { font-size: var(--fontSize-label-1); font-weight: var(--weight-bold); color: var(--white); text-transform: uppercase; letter-spacing: 1px; margin-block-end: 4px; }
+    .payment-card p  { font-size: 1rem; color: var(--quick-silver); }
+
+    /* Card number fields */
+    .card-fields { display:none; margin-block-start:20px; border-top:1px solid hsla(38,61%,73%,0.12); padding-block-start:20px; }
+    .card-fields.show { display:block; animation: panelIn .3s ease; }
+
+    /* Action buttons */
+    .co-btn-primary {
+      width: 100%; padding: 14px;
+      background: var(--gold-crayola); border: none;
+      color: var(--smoky-black-1);
+      font-size: var(--fontSize-label-2); font-family: var(--fontFamily-dm_sans);
+      font-weight: var(--weight-bold); text-transform: uppercase; letter-spacing: var(--letterSpacing-5);
+      cursor: pointer; transition: var(--transition-1); margin-block-start: 6px;
+    }
+    .co-btn-primary:hover { opacity: .85; }
+    .co-btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+
+    .co-btn-back {
+      background: transparent;
+      border: 1px solid hsla(38,61%,73%,0.25);
+      color: var(--quick-silver);
+      font-size: var(--fontSize-label-2); font-family: var(--fontFamily-dm_sans);
+      text-transform: uppercase; letter-spacing: var(--letterSpacing-5);
+      padding: 10px 24px; cursor: pointer; transition: var(--transition-1); margin-block-end: 12px;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .co-btn-back:hover { border-color: var(--gold-crayola); color: var(--gold-crayola); }
+
+    .form-feedback-err {
+      background: hsla(0,50%,30%,.2); color: #e57373;
+      border: 1px solid #e57373; padding: 10px 14px;
+      font-size: var(--fontSize-label-1); font-weight: var(--weight-bold);
+      text-transform: uppercase; letter-spacing: .05em;
+      margin-block-end: 14px; display: none;
+    }
+    .form-feedback-err.show { display: block; }
+
+    /* Order summary sidebar */
+    .order-summary {
+      background: var(--eerie-black-2);
+      border: 1px solid hsla(38,61%,73%,0.12);
+      padding: 28px 24px;
+      position: sticky;
+      top: 120px;
+    }
+    .summary-title {
+      font-family: var(--fontFamily-forum);
+      font-size: var(--fontSize-title-2);
+      color: var(--white);
+      margin-block-end: 20px;
+      padding-block-end: 16px;
+      border-bottom: 1px solid hsla(38,61%,73%,0.12);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .summary-title svg { color: var(--gold-crayola); }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-block: 10px;
+      border-bottom: 1px solid hsla(38,61%,73%,0.08);
+      gap: 12px;
+    }
+    .summary-item-name { color: var(--white); font-size: var(--fontSize-label-1); }
+    .summary-item-qty  { color: var(--quick-silver); font-size: 1.1rem; }
+    .summary-item-price { color: var(--gold-crayola); font-weight: var(--weight-bold); font-size: var(--fontSize-label-1); white-space: nowrap; }
+
+    .summary-divider { height:1px; background: hsla(38,61%,73%,0.15); margin-block: 16px; }
+    .summary-row { display:flex; justify-content:space-between; font-size:var(--fontSize-label-1); padding-block:4px; }
+    .summary-row.total { color:var(--white); font-weight:var(--weight-bold); font-size:var(--fontSize-body-4); padding-block-start:10px; border-top:1px solid hsla(38,61%,73%,0.15); margin-block-start:6px; }
+    .summary-row span:last-child { color: var(--gold-crayola); }
+    .summary-row:not(.total) { color: var(--quick-silver); }
+
+    .summary-empty {
+      text-align: center;
+      color: var(--quick-silver);
+      font-size: var(--fontSize-body-4);
+      padding: 24px 0;
+    }
+
+    /* Success screen */
+    .checkout-success {
+      display: none;
+      text-align: center;
+      padding: 60px 40px;
+      background: var(--eerie-black-2);
+      border: 1px solid hsla(38,61%,73%,0.12);
+    }
+    .checkout-success.show { display: block; animation: panelIn .4s ease; }
+    .success-circle {
+      width: 72px; height: 72px;
+      border: 2px solid var(--gold-crayola);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--gold-crayola);
+      animation: popIn .5s cubic-bezier(.175,.885,.32,1.275);
+    }
+    @keyframes popIn { from{transform:scale(0);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .checkout-success h2 { font-family: var(--fontFamily-forum); font-size: var(--fontSize-headline-2); color: var(--white); margin-block-end:10px; }
+    .checkout-success p  { color: var(--quick-silver); font-size: var(--fontSize-body-4); line-height: var(--lineHeight-4); margin-block-end: 28px; }
+    .order-ref { background: hsla(38,61%,73%,0.08); border:1px solid hsla(38,61%,73%,0.2); padding: 14px 20px; margin-block-end: 28px; }
+    .order-ref-label { font-size: var(--fontSize-label-1); color: var(--quick-silver); text-transform: uppercase; letter-spacing: .06em; }
+    .order-ref-num   { font-family: var(--fontFamily-forum); font-size: var(--fontSize-headline-2); color: var(--gold-crayola); }
+
+    /* Back to home link */
+    .back-home {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--gold-crayola); font-size: var(--fontSize-label-1);
+      font-weight: var(--weight-bold); text-transform: uppercase;
+      letter-spacing: var(--letterSpacing-3); text-decoration: none;
+      transition: var(--transition-1);
+    }
+    .back-home:hover { color: var(--white); }
+  </style>
+  <link rel="stylesheet" href="../css/alignment.css">
+</head>
+
+<body id="top">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <address class="topbar-item">
+        <div class="icon"><ion-icon name="location-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Rua do Restaurante, Cidade Deliciosa, Lisboa 5555, Portugal</span>
+      </address>
+      <div class="separator"></div>
+      <div class="topbar-item item-2">
+        <div class="icon"><ion-icon name="time-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Diariamente: 12.00 às 00.00</span>
+      </div>
+      <a href="tel:+351123123456" class="topbar-item link">
+        <div class="icon"><ion-icon name="call-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">+351 123 456 789</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../assets/images/logo-header.svg" width="160" height="50" alt="Casa do Sabor">
+      </a>
+      <nav class="navbar" data-navbar>
+        <button class="close-btn" aria-label="fechar menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+        <a href="../index.html" class="logo"><img src="../assets/images/logo-header.svg" width="160" height="50" alt=""></a>
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="../index.html#home" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Início</span></a></li>
+          <li class="navbar-item"><a href="menu.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Ementas</span></a></li>
+          <li class="navbar-item"><a href="about.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Sobre Nós</span></a></li>
+          <li class="navbar-item"><a href="chefs.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Os Nossos Chefs</span></a></li>
+          <li class="navbar-item"><a href="contact.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Contacto</span></a></li>
+        </ul>
+        <div class="text-center">
+          <p class="headline-1 navbar-title">Visite-nos</p>
+          <address class="body-4">Rua do Restaurante, Cidade Deliciosa,<br>Lisboa 5555, Portugal</address>
+          <div class="separator"></div>
+          <p class="contact-label">Pedido de Reserva</p>
+          <a href="tel:+351123123456" class="body-1 contact-number hover-underline">+351-123-123456</a>
+        </div>
+      </nav>
+      <div id="headerAuthArea">
+        <button class="btn-login-icon" onclick="openLoginModal()" aria-label="Entrar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+      </div>
+      <button class="nav-open-btn" aria-label="abrir menu" data-nav-toggler>
+        <span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span>
+      </button>
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+  <!-- Login Modal -->
+  <div class="login-modal-backdrop" id="loginModalBackdrop" onclick="handleBackdropClick(event)">
+    <button class="login-modal-close" id="loginModalCloseBtn" onclick="closeLoginModal()" aria-label="Fechar">&#x2715;</button>
+    <div class="login-modal" id="loginModal">
+      <div class="lm-form-container lm-sign-in">
+        <div class="lm-form">
+          <h2>Bem-vindo</h2><p class="lm-subtitle">Iniciar Sessão</p>
+          <div class="lm-separator-row"><div class="lm-sep"></div><div class="lm-sep"></div><div class="lm-sep"></div></div>
+          <div class="lm-error" id="signInError"></div>
+          <input type="email" id="signInEmail" placeholder="O seu email" autocomplete="email">
+          <input type="password" id="signInPassword" placeholder="Palavra-passe" autocomplete="current-password">
+          <a href="#" onclick="return false;" style="align-self:flex-end;margin-top:-6px;">Esqueceu a palavra-passe?</a>
+          <button class="lm-btn-primary" onclick="handleSignIn()">Entrar</button>
+        </div>
+      </div>
+      <div class="lm-form-container lm-sign-up">
+        <div class="lm-form">
+          <h2>Criar Conta</h2><p class="lm-subtitle">Registo</p>
+          <div class="lm-separator-row"><div class="lm-sep"></div><div class="lm-sep"></div><div class="lm-sep"></div></div>
+          <div class="lm-error" id="signUpError"></div>
+          <input type="text" id="signUpName" placeholder="O seu nome" autocomplete="name">
+          <input type="email" id="signUpEmail" placeholder="O seu email" autocomplete="email">
+          <input type="password" id="signUpPassword" placeholder="Palavra-passe (mín. 6 caracteres)" autocomplete="new-password">
+          <button class="lm-btn-primary" onclick="handleSignUp()">Registar</button>
+        </div>
+      </div>
+      <div class="lm-toggle-container">
+        <div class="lm-toggle">
+          <div class="lm-toggle-panel lm-toggle-left">
+            <h2>Já tem conta?</h2><div class="lm-gold-line"></div>
+            <p>Inicie sessão para continuar.</p>
+            <button class="lm-btn-ghost" onclick="toggleLoginModal(false)">Iniciar Sessão</button>
+          </div>
+          <div class="lm-toggle-panel lm-toggle-right">
+            <h2>Novo aqui?</h2><div class="lm-gold-line"></div>
+            <p>Crie uma conta para continuar.</p>
+            <button class="lm-btn-ghost" onclick="toggleLoginModal(true)">Criar Conta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CHECKOUT PAGE ══ -->
+  <main class="checkout-page">
+    <div class="checkout-wrap">
+
+      <!-- LEFT: Steps + Panels -->
+      <div>
+
+        <!-- Breadcrumb steps -->
+        <div class="checkout-steps" id="checkoutSteps">
+          <div class="step active" id="step1">
+            <div class="step-num">1</div>
+            <span>Entrega</span>
+          </div>
+          <div class="step-sep"></div>
+          <div class="step" id="step2">
+            <div class="step-num">2</div>
+            <span>Morada</span>
+          </div>
+          <div class="step-sep"></div>
+          <div class="step" id="step3">
+            <div class="step-num">3</div>
+            <span>Pagamento</span>
+          </div>
+        </div>
+
+        <!-- PANEL 1: Delivery type -->
+        <div class="checkout-panel active" id="panel1">
+          <h2 class="panel-title">Como deseja receber?</h2>
+          <p class="panel-subtitle">Escolha o método de entrega da sua encomenda.</p>
+
+          <div class="delivery-grid">
+            <div class="delivery-card" id="cardTakeaway" onclick="selectDelivery('takeaway')">
+              <div class="delivery-check">✓</div>
+              <div class="delivery-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </div>
+              <h3>Take-Away</h3>
+              <p>Levanta a encomenda no restaurante. Pronto em 20-30 min.</p>
+            </div>
+            <div class="delivery-card" id="cardDelivery" onclick="selectDelivery('delivery')">
+              <div class="delivery-check">✓</div>
+              <div class="delivery-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+              </div>
+              <h3>Entrega ao Domicílio</h3>
+              <p>Entregamos em casa. Tempo estimado: 45-60 min.</p>
+            </div>
+          </div>
+
+          <div class="form-feedback-err" id="deliveryErr">Por favor selecione um método de entrega.</div>
+          <button class="co-btn-primary" onclick="nextStep(1)">Continuar →</button>
+        </div>
+
+        <!-- PANEL 2: Address (only for delivery) -->
+        <div class="checkout-panel" id="panel2">
+          <button class="co-btn-back" onclick="prevStep(2)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Voltar
+          </button>
+          <h2 class="panel-title">Morada de Entrega</h2>
+          <p class="panel-subtitle">Preencha os dados para a entrega da sua encomenda.</p>
+
+          <div class="form-feedback-err" id="addressErr"></div>
+
+          <div class="form-group">
+            <label class="field-label" for="addrMorada">Morada <span>*</span></label>
+            <input class="co-input" type="text" id="addrMorada" placeholder="Rua, Avenida, Travessa..." autocomplete="street-address">
+            <p class="field-error" id="errMorada">Campo obrigatório.</p>
+          </div>
+
+          <div class="form-group-row">
+            <div>
+              <label class="field-label" for="addrAndar">Andar / Fração</label>
+              <input class="co-input" type="text" id="addrAndar" placeholder="Ex: 2.º Dto" autocomplete="off">
+            </div>
+            <div>
+              <label class="field-label" for="addrLote">Lote / Bloco</label>
+              <input class="co-input" type="text" id="addrLote" placeholder="Ex: Lote 5" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div>
+              <label class="field-label" for="addrCodPostal">Código Postal <span>*</span></label>
+              <input class="co-input" type="text" id="addrCodPostal" placeholder="0000-000" maxlength="8" autocomplete="postal-code">
+              <p class="field-error" id="errCodPostal">Formato inválido (ex: 1000-001).</p>
+            </div>
+            <div>
+              <label class="field-label" for="addrLocalidade">Localidade <span>*</span></label>
+              <input class="co-input" type="text" id="addrLocalidade" placeholder="Lisboa" autocomplete="address-level2">
+              <p class="field-error" id="errLocalidade">Campo obrigatório.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="field-label" for="addrTelefone">Número de Telefone <span>*</span></label>
+            <input class="co-input" type="tel" id="addrTelefone" placeholder="+351 912 345 678" autocomplete="tel">
+            <p class="field-error" id="errTelefone">Número inválido.</p>
+          </div>
+
+          <button class="co-btn-primary" onclick="nextStep(2)">Continuar → Pagamento</button>
+        </div>
+
+        <!-- PANEL 3: Payment -->
+        <div class="checkout-panel" id="panel3">
+          <button class="co-btn-back" onclick="prevStep(3)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Voltar
+          </button>
+          <h2 class="panel-title">Método de Pagamento</h2>
+          <p class="panel-subtitle">Escolha como pretende pagar a sua encomenda.</p>
+
+          <div class="form-feedback-err" id="paymentErr">Por favor selecione um método de pagamento.</div>
+
+          <div class="payment-grid">
+            <div class="payment-card" id="payCard" onclick="selectPayment('card')">
+              <div class="payment-check">✓</div>
+              <div class="payment-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              </div>
+              <h4>Cartão</h4>
+              <p>Visa / MC / MB</p>
+            </div>
+            <div class="payment-card" id="payMbway" onclick="selectPayment('mbway')">
+              <div class="payment-check">✓</div>
+              <div class="payment-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </div>
+              <h4>MB Way</h4>
+              <p>Pagamento móvel</p>
+            </div>
+            <div class="payment-card" id="payMultibanco" onclick="selectPayment('multibanco')">
+              <div class="payment-check">✓</div>
+              <div class="payment-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h.01M10 15h4"/></svg>
+              </div>
+              <h4>Multibanco</h4>
+              <p>Referência ATM</p>
+            </div>
+            <div class="payment-card" id="payCash" onclick="selectPayment('cash')">
+              <div class="payment-check">✓</div>
+              <div class="payment-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+              </div>
+              <h4>Numerário</h4>
+              <p>Pagar na entrega</p>
+            </div>
+          </div>
+
+          <!-- Card details (shown only when card is selected) -->
+          <div class="card-fields" id="cardFields">
+            <div class="form-group">
+              <label class="field-label" for="cardNumber">Número do Cartão <span>*</span></label>
+              <input class="co-input" type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number">
+              <p class="field-error" id="errCardNumber">Número inválido.</p>
+            </div>
+            <div class="form-group-row">
+              <div>
+                <label class="field-label" for="cardExpiry">Validade <span>*</span></label>
+                <input class="co-input" type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
+                <p class="field-error" id="errCardExpiry">Data inválida.</p>
+              </div>
+              <div>
+                <label class="field-label" for="cardCvc">CVV <span>*</span></label>
+                <input class="co-input" type="text" id="cardCvc" placeholder="123" maxlength="4" autocomplete="cc-csc">
+                <p class="field-error" id="errCardCvc">CVV inválido.</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="field-label" for="cardName">Nome no Cartão <span>*</span></label>
+              <input class="co-input" type="text" id="cardName" placeholder="Nome como aparece no cartão" autocomplete="cc-name">
+              <p class="field-error" id="errCardName">Campo obrigatório.</p>
+            </div>
+          </div>
+
+          <!-- MB Way phone -->
+          <div class="card-fields" id="mbwayFields">
+            <div class="form-group">
+              <label class="field-label" for="mbwayPhone">Número de Telemóvel MB Way <span>*</span></label>
+              <input class="co-input" type="tel" id="mbwayPhone" placeholder="+351 912 345 678" autocomplete="tel">
+              <p class="field-error" id="errMbwayPhone">Número inválido.</p>
+            </div>
+          </div>
+
+          <button class="co-btn-primary" id="btnConfirm" onclick="confirmOrder()">
+            Confirmar Encomenda
+          </button>
+        </div>
+
+        <!-- Success screen -->
+        <div class="checkout-success" id="checkoutSuccess">
+          <div class="success-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2>Encomenda Confirmada!</h2>
+          <p>Obrigado pela sua encomenda.<br>Receberá uma confirmação em breve.</p>
+          <div class="order-ref">
+            <p class="order-ref-label">Referência da Encomenda</p>
+            <p class="order-ref-num" id="orderRef">#CDS-000000</p>
+          </div>
+          <div id="successDetails" style="margin-block-end:28px;text-align:left;"></div>
+          <a href="../index.html" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Voltar à Página Inicial
+          </a>
+        </div>
+
+      </div><!-- /left -->
+
+      <!-- RIGHT: Order summary sidebar -->
+      <div class="order-summary" id="orderSummary">
+        <h3 class="summary-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          A Sua Encomenda
+        </h3>
+        <div id="summaryItems"><p class="summary-empty">Carrinho vazio.</p></div>
+        <div class="summary-divider"></div>
+        <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">0.00€</span></div>
+        <div class="summary-row" id="deliveryFeeRow" style="display:none"><span>Taxa de entrega</span><span id="deliveryFee">2.50€</span></div>
+        <div class="summary-row total"><span>Total</span><span id="summaryTotal">0.00€</span></div>
+      </div>
+
+    </div><!-- /checkout-wrap -->
+  </main>
+
+  <a href="#top" class="back-top-btn" aria-label="Voltar ao topo" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <script src="../js/header.js"></script>
+  <script src="../js/backtotop.js"></script>
+  <script src="../js/login.js"></script>
+  <script src="../js/cart.js"></script>
+
+  <script>
+  (function () {
+    "use strict";
+
+    const CART_KEY     = "casaDoSaborCart";
+    const DELIVERY_FEE = 2.50;
+
+    let selectedDelivery = null;
+    let selectedPayment  = null;
+
+    /* ── Load cart ──────────────────────────────────── */
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
+      catch(e) { return []; }
+    }
+
+    /* ── Render summary sidebar ─────────────────────── */
+    function renderSummary() {
+      const cart   = getCart();
+      const items  = document.getElementById("summaryItems");
+      const sub    = document.getElementById("summarySubtotal");
+      const tot    = document.getElementById("summaryTotal");
+      const feeRow = document.getElementById("deliveryFeeRow");
+
+      if (!cart.length) {
+        items.innerHTML = '<p class="summary-empty">Carrinho vazio.</p>';
+        sub.textContent = "0.00€";
+        tot.textContent = "0.00€";
+        return;
+      }
+
+      const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+      const fee      = selectedDelivery === "delivery" ? DELIVERY_FEE : 0;
+      const total    = subtotal + fee;
+
+      items.innerHTML = cart.map(i => `
+        <div class="summary-item">
+          <div>
+            <p class="summary-item-name">${i.name}</p>
+            <p class="summary-item-qty">x${i.qty}</p>
+          </div>
+          <span class="summary-item-price">${(i.price * i.qty).toFixed(2)}€</span>
+        </div>`).join("");
+
+      if (feeRow) feeRow.style.display = selectedDelivery === "delivery" ? "flex" : "none";
+      if (sub) sub.textContent = subtotal.toFixed(2) + "€";
+      if (tot) tot.textContent = total.toFixed(2) + "€";
+    }
+
+    /* ── Delivery type selection ────────────────────── */
+    window.selectDelivery = function(type) {
+      selectedDelivery = type;
+      document.getElementById("cardTakeaway").classList.toggle("selected", type === "takeaway");
+      document.getElementById("cardDelivery").classList.toggle("selected", type === "delivery");
+      document.getElementById("deliveryErr").classList.remove("show");
+      renderSummary();
+    };
+
+    /* ── Payment selection ──────────────────────────── */
+    window.selectPayment = function(type) {
+      selectedPayment = type;
+      ["payCard","payMbway","payMultibanco","payCash"].forEach(id => {
+        document.getElementById(id)?.classList.remove("selected");
+      });
+      document.getElementById("pay" + type.charAt(0).toUpperCase() + type.slice(1))?.classList.add("selected");
+
+      // Show/hide extra fields
+      document.getElementById("cardFields")?.classList.toggle("show", type === "card");
+      document.getElementById("mbwayFields")?.classList.toggle("show", type === "mbway");
+      document.getElementById("paymentErr").classList.remove("show");
+    };
+
+    /* ── Step navigation ────────────────────────────── */
+    function setStepState(stepNum) {
+      for (let i = 1; i <= 3; i++) {
+        const el = document.getElementById("step" + i);
+        if (!el) continue;
+        el.classList.remove("active","done");
+        if (i < stepNum) el.classList.add("done");
+        else if (i === stepNum) el.classList.add("active");
+      }
+    }
+
+    function showPanel(num) {
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById("panel" + i)?.classList.remove("active");
+      }
+      document.getElementById("panel" + num)?.classList.add("active");
+      setStepState(num);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    window.nextStep = function(from) {
+      if (from === 1) {
+        if (!selectedDelivery) {
+          document.getElementById("deliveryErr").classList.add("show");
+          return;
+        }
+        if (selectedDelivery === "takeaway") {
+          showPanel(3);  // skip address for takeaway
+          setStepState(3);
+        } else {
+          showPanel(2);
+        }
+      } else if (from === 2) {
+        if (!validateAddress()) return;
+        showPanel(3);
+      }
+    };
+
+    window.prevStep = function(from) {
+      if (from === 2) showPanel(1);
+      if (from === 3) {
+        if (selectedDelivery === "delivery") showPanel(2);
+        else showPanel(1);
+      }
+    };
+
+    /* ── Address validation ─────────────────────────── */
+    function validateAddress() {
+      let ok = true;
+      const fields = [
+        { id: "addrMorada",    err: "errMorada",    fn: v => v.trim().length >= 5 },
+        { id: "addrCodPostal", err: "errCodPostal", fn: v => /^\d{4}-\d{3}$/.test(v.trim()) },
+        { id: "addrLocalidade",err: "errLocalidade",fn: v => v.trim().length >= 2 },
+        { id: "addrTelefone",  err: "errTelefone",  fn: v => /^[\d\s\+\-\(\)]{9,}$/.test(v.trim()) },
+      ];
+      fields.forEach(f => {
+        const input = document.getElementById(f.id);
+        const errEl = document.getElementById(f.err);
+        const valid = input && f.fn(input.value);
+        input?.classList.toggle("error", !valid);
+        errEl?.classList.toggle("show", !valid);
+        if (!valid) ok = false;
+      });
+      return ok;
+    }
+
+    // Format postal code as user types
+    const cpInput = document.getElementById("addrCodPostal");
+    if (cpInput) {
+      cpInput.addEventListener("input", function() {
+        let v = this.value.replace(/\D/g,"");
+        if (v.length > 4) v = v.slice(0,4) + "-" + v.slice(4,7);
+        this.value = v;
+      });
+    }
+
+    // Format card number as user types
+    const cnInput = document.getElementById("cardNumber");
+    if (cnInput) {
+      cnInput.addEventListener("input", function() {
+        let v = this.value.replace(/\D/g,"").slice(0,16);
+        this.value = v.replace(/(.{4})/g,"$1 ").trim();
+      });
+    }
+
+    // Format card expiry
+    const ceInput = document.getElementById("cardExpiry");
+    if (ceInput) {
+      ceInput.addEventListener("input", function() {
+        let v = this.value.replace(/\D/g,"").slice(0,4);
+        if (v.length > 2) v = v.slice(0,2) + "/" + v.slice(2);
+        this.value = v;
+      });
+    }
+
+    /* ── Confirm order ──────────────────────────────── */
+    window.confirmOrder = function() {
+      if (!selectedPayment) {
+        document.getElementById("paymentErr").classList.add("show");
+        return;
+      }
+
+      // Validate card fields if selected
+      if (selectedPayment === "card") {
+        let ok = true;
+        const cf = [
+          { id:"cardNumber", err:"errCardNumber", fn: v => /^[\d ]{19}$/.test(v.trim()) },
+          { id:"cardExpiry", err:"errCardExpiry", fn: v => /^\d{2}\/\d{2}$/.test(v.trim()) },
+          { id:"cardCvc",    err:"errCardCvc",    fn: v => /^\d{3,4}$/.test(v.trim()) },
+          { id:"cardName",   err:"errCardName",   fn: v => v.trim().length >= 3 },
+        ];
+        cf.forEach(f => {
+          const input = document.getElementById(f.id);
+          const errEl = document.getElementById(f.err);
+          const valid = input && f.fn(input.value);
+          input?.classList.toggle("error", !valid);
+          errEl?.classList.toggle("show", !valid);
+          if (!valid) ok = false;
+        });
+        if (!ok) return;
+      }
+
+      if (selectedPayment === "mbway") {
+        const mInput = document.getElementById("mbwayPhone");
+        const mErr   = document.getElementById("errMbwayPhone");
+        const valid  = mInput && /^[\d\s\+\-\(\)]{9,}$/.test(mInput.value.trim());
+        mInput?.classList.toggle("error", !valid);
+        mErr?.classList.toggle("show", !valid);
+        if (!valid) return;
+      }
+
+      // Save order
+      const cart     = getCart();
+      const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+      const fee      = selectedDelivery === "delivery" ? DELIVERY_FEE : 0;
+      const total    = subtotal + fee;
+      const ref      = "#CDS-" + Math.floor(100000 + Math.random() * 900000);
+
+      const order = {
+        ref, cart, subtotal, fee, total,
+        delivery: selectedDelivery,
+        payment:  selectedPayment,
+        date: new Date().toLocaleString("pt-PT"),
+        address: selectedDelivery === "delivery" ? {
+          morada:     document.getElementById("addrMorada")?.value,
+          andar:      document.getElementById("addrAndar")?.value,
+          lote:       document.getElementById("addrLote")?.value,
+          codPostal:  document.getElementById("addrCodPostal")?.value,
+          localidade: document.getElementById("addrLocalidade")?.value,
+          telefone:   document.getElementById("addrTelefone")?.value,
+        } : null,
+      };
+
+      const orders = JSON.parse(localStorage.getItem("casaDoSaborOrders") || "[]");
+      orders.push(order);
+      localStorage.setItem("casaDoSaborOrders", JSON.stringify(orders));
+      localStorage.setItem("casaDoSaborActiveOrder", JSON.stringify(order));
+      localStorage.removeItem("casaDoSaborCart");
+
+      // Redirect to tracking page
+      window.location.href = "tracking.html";
+      return; // stop execution
+
+      const deliveryLabel = {
+        takeaway:    "Take-Away (levantar no restaurante)",
+        delivery:    "Entrega ao Domicílio",
+      }[selectedDelivery];
+      const paymentLabel = {
+        card:        "Cartão Bancário",
+        mbway:       "MB Way",
+        multibanco:  "Multibanco (Referência ATM)",
+        cash:        "Numerário na Entrega",
+      }[selectedPayment];
+
+      let addrHTML = "";
+      if (order.address) {
+        const a = order.address;
+        addrHTML = `<div class="summary-row"><span>Morada</span><span style="color:var(--white);text-align:right;max-width:180px;">${a.morada}${a.andar ? ", " + a.andar : ""}${a.lote ? ", " + a.lote : ""}<br>${a.codPostal} ${a.localidade}</span></div>
+        <div class="summary-row"><span>Telefone</span><span style="color:var(--white);">${a.telefone}</span></div>`;
+      }
+
+      document.getElementById("successDetails").innerHTML = `
+        <div style="background:hsla(38,61%,73%,0.07);border:1px solid hsla(38,61%,73%,0.2);padding:16px 18px;">
+          <div class="summary-row"><span>Entrega</span><span style="color:var(--white);">${deliveryLabel}</span></div>
+          <div class="summary-row"><span>Pagamento</span><span style="color:var(--white);">${paymentLabel}</span></div>
+          ${addrHTML}
+          <div class="summary-divider"></div>
+          <div class="summary-row total"><span>Total Pago</span><span>${total.toFixed(2)}€</span></div>
+        </div>`;
+
+      document.getElementById("checkoutSuccess").classList.add("show");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    /* ── Init ───────────────────────────────────────── */
+    document.addEventListener("DOMContentLoaded", function() {
+      const cart = getCart();
+      if (!cart.length) {
+        // Redirect back if cart is empty
+        window.location.href = "../index.html";
+        return;
+      }
+      renderSummary();
+    });
+  })();
+  </script>
+
+  <script src="../js/db.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

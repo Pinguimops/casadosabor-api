@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa do Sabor — Comida Incrível e Deliciosa</title>
+  <meta name="description" content="Restaurante Casa do Sabor — gastronomia portuguesa com alma.">
+  <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <link rel="stylesheet" href="css/buttons.css">
+  <link rel="stylesheet" href="css/preload.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/backtotop.css">
+  <link rel="stylesheet" href="css/reservation-map.css">
+  <link rel="stylesheet" href="css/cart.css">
+
+  <!-- Preload hero images -->
+  <link rel="preload" as="image" href="./assets/images/hero-slider-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
+  <link rel="stylesheet" href="./css/alignment.css">
+</head>
+
+<body id="top">
+
+  <!-- Preloader -->
+  <div class="preload" data-preaload>
+    <div class="circle"></div>
+    <p class="text">Casa do Sabor</p>
+  </div>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <address class="topbar-item">
+        <div class="icon"><ion-icon name="location-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Rua do Restaurante, Cidade Deliciosa, Lisboa 5555, Portugal</span>
+      </address>
+      <div class="separator"></div>
+      <div class="topbar-item item-2">
+        <div class="icon"><ion-icon name="time-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Diariamente: 8.00 às 22.00</span>
+      </div>
+      <a href="tel:+11234567890" class="topbar-item link">
+        <div class="icon"><ion-icon name="call-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">123 456 7890</span>
+      </a>
+      <div class="separator"></div>
+      <a href="mailto:reservas@restaurante.com" class="topbar-item link">
+        <div class="icon"><ion-icon name="mail-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">reservas@restaurante.com</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="index.html" class="logo">
+        <img src="./assets/images/logo-header.svg" width="160" height="50" alt="Casa do Sabor">
+      </a>
+
+      <nav class="navbar" data-navbar>
+        <button class="close-btn" aria-label="fechar menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo-header.svg" width="160" height="50" alt="">
+        </a>
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="#home" class="navbar-link hover-underline active">
+              <div class="separator"></div><span class="span">Início</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="pages/menu.html" class="navbar-link hover-underline">
+              <div class="separator"></div><span class="span">Ementas</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="pages/about.html" class="navbar-link hover-underline">
+              <div class="separator"></div><span class="span">Sobre Nós</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="pages/chefs.html" class="navbar-link hover-underline">
+              <div class="separator"></div><span class="span">Os Nossos Chefs</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="pages/contact.html" class="navbar-link hover-underline">
+              <div class="separator"></div><span class="span">Contacto</span>
+            </a>
+          </li>
+        </ul>
+        <div class="text-center">
+          <p class="headline-1 navbar-title">Visite-nos</p>
+          <address class="body-4">Rua do Restaurante, Cidade Deliciosa,<br>Lisboa 5555, Portugal</address>
+          <p class="body-4 navbar-text">Aberto: 9.30 às 14.30</p>
+          <a href="mailto:reservas@grilli.com" class="body-4 sidebar-link">reservas@grilli.com</a>
+          <div class="separator"></div>
+          <p class="contact-label">Pedido de Reserva</p>
+          <a href="tel:+351123123456" class="body-1 contact-number hover-underline">+351-123-123456</a>
+        </div>
+      </nav>
+
+      <!-- Auth area (login / user greeting) -->
+      <div id="headerAuthArea">
+        <button class="btn-login-icon" onclick="openLoginModal()" aria-label="Entrar na conta" title="Entrar / Registar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Cart icon -->
+      <button class="btn-cart-icon" id="btnCartOpen" onclick="openCart()" aria-label="Carrinho de compras" title="Carrinho">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </button>
+
+      <a href="#reserva" class="btn btn-secondary">
+        <span class="text text-1">Encontrar uma Mesa</span>
+        <span class="text text-2" aria-hidden="true">Encontrar uma Mesa</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="abrir menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+
+  <!-- ══════════════════════════════════
+       LOGIN MODAL
+  ══════════════════════════════════ -->
+  <div class="login-modal-backdrop" id="loginModalBackdrop" onclick="handleBackdropClick(event)">
+    <!-- Close button OUTSIDE modal so overflow:hidden cannot trap its z-index -->
+    <button class="login-modal-close" id="loginModalCloseBtn" onclick="closeLoginModal()" aria-label="Fechar">&#x2715;</button>
+    <div class="login-modal" id="loginModal">
+
+      <!-- Sign In -->
+      <div class="lm-form-container lm-sign-in">
+        <div class="lm-form">
+          <h2>Bem-vindo</h2>
+          <p class="lm-subtitle">Iniciar Sessão</p>
+          <div class="lm-separator-row">
+            <div class="lm-sep"></div><div class="lm-sep"></div><div class="lm-sep"></div>
+          </div>
+          <div class="lm-error" id="signInError"></div>
+          <input type="email"    id="signInEmail"    placeholder="O seu email"   autocomplete="email">
+          <input type="password" id="signInPassword" placeholder="Palavra-passe" autocomplete="current-password">
+          <a href="#" onclick="return false;" style="align-self:flex-end;margin-top:-6px;">Esqueceu a palavra-passe?</a>
+          <button class="lm-btn-primary" onclick="handleSignIn()">Entrar</button>
+        </div>
+      </div>
+
+      <!-- Sign Up -->
+      <div class="lm-form-container lm-sign-up">
+        <div class="lm-form">
+          <h2>Criar Conta</h2>
+          <p class="lm-subtitle">Registo</p>
+          <div class="lm-separator-row">
+            <div class="lm-sep"></div><div class="lm-sep"></div><div class="lm-sep"></div>
+          </div>
+          <div class="lm-error" id="signUpError"></div>
+          <input type="text"     id="signUpName"     placeholder="O seu nome"                  autocomplete="name">
+          <input type="email"    id="signUpEmail"    placeholder="O seu email"                  autocomplete="email">
+          <input type="password" id="signUpPassword" placeholder="Palavra-passe (mín. 6 caract.)" autocomplete="new-password">
+          <button class="lm-btn-primary" onclick="handleSignUp()">Registar</button>
+        </div>
+      </div>
+
+      <!-- Toggle overlay -->
+      <div class="lm-toggle-container">
+        <div class="lm-toggle">
+          <div class="lm-toggle-panel lm-toggle-left">
+            <h2>Já tem conta?</h2>
+            <div class="lm-gold-line"></div>
+            <p>Inicie sessão para aceder às suas reservas e experiências personalizadas.</p>
+            <button class="lm-btn-ghost" onclick="toggleLoginModal(false)">Iniciar Sessão</button>
+          </div>
+          <div class="lm-toggle-panel lm-toggle-right">
+            <h2>Novo aqui?</h2>
+            <div class="lm-gold-line"></div>
+            <p>Crie uma conta e desfrute de reservas mais rápidas e ofertas exclusivas.</p>
+            <button class="lm-btn-ghost" onclick="toggleLoginModal(true)">Criar Conta</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <main>
+    <article>
+
+      <!-- ── HERO ────────────────────────────────────── -->
+      <section class="hero text-center" aria-label="home" id="home">
+        <ul class="hero-slider" data-hero-slider>
+
+          <li class="slider-item active" data-hero-slider-item>
+            <div class="slider-bg">
+              <img src="./assets/images/hero-slider-1.jpg" width="1880" height="950" alt="" class="img-cover">
+            </div>
+            <p class="label-2 section-subtitle slider-reveal">Tradicional & Higiene</p>
+            <h1 class="display-1 hero-title slider-reveal">Pelo amor à <br>comida deliciosa</h1>
+            <p class="body-2 hero-text slider-reveal">Venha com a família e sinta a alegria da comida deliciosa</p>
+            <a href="pages/menu.html" class="btn btn-primary slider-reveal">
+              <span class="text text-1">Ver a Nossa Ementa</span>
+              <span class="text text-2" aria-hidden="true">Ver a Nossa Ementa</span>
+            </a>
+          </li>
+
+          <li class="slider-item" data-hero-slider-item>
+            <div class="slider-bg">
+              <img src="./assets/images/hero-slider-2.jpg" width="1880" height="950" alt="" class="img-cover">
+            </div>
+            <p class="label-2 section-subtitle slider-reveal">experiência deliciosa</p>
+            <h1 class="display-1 hero-title slider-reveal">Sabores Inspirados pelas <br>Estações</h1>
+            <p class="body-2 hero-text slider-reveal">Venha com a família e sinta a alegria da comida deliciosa</p>
+            <a href="pages/menu.html" class="btn btn-primary slider-reveal">
+              <span class="text text-1">Ver a Nossa Ementa</span>
+              <span class="text text-2" aria-hidden="true">Ver a Nossa Ementa</span>
+            </a>
+          </li>
+
+          <li class="slider-item" data-hero-slider-item>
+            <div class="slider-bg">
+              <img src="./assets/images/hero-slider-3.jpg" width="1880" height="950" alt="" class="img-cover">
+            </div>
+            <p class="label-2 section-subtitle slider-reveal">incrível e deliciosa</p>
+            <h1 class="display-1 hero-title slider-reveal">Onde cada sabor <br>conta uma história</h1>
+            <p class="body-2 hero-text slider-reveal">Venha com a família e sinta a alegria da comida deliciosa</p>
+            <a href="pages/menu.html" class="btn btn-primary slider-reveal">
+              <span class="text text-1">Ver a Nossa Ementa</span>
+              <span class="text text-2" aria-hidden="true">Ver a Nossa Ementa</span>
+            </a>
+          </li>
+
+        </ul>
+
+        <button class="slider-btn prev" aria-label="deslizar para anterior" data-prev-btn>
+          <ion-icon name="chevron-back"></ion-icon>
+        </button>
+        <button class="slider-btn next" aria-label="deslizar para seguinte" data-next-btn>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </button>
+
+        <a href="#reserva" class="hero-btn has-after">
+          <img src="./assets/images/hero-icon.png" width="48" height="48" alt="ícone de reserva">
+          <span class="label-2 text-center span">Reservar uma Mesa</span>
+        </a>
+      </section>
+
+
+      <!-- ── SERVICE ─────────────────────────────────── -->
+      <section class="section service bg-black-10 text-center" aria-label="service">
+        <div class="container">
+          <p class="section-subtitle label-2">Sabores para a Realeza</p>
+          <h2 class="headline-1 section-title">Oferecemos o Melhor</h2>
+          <p class="section-text">Da seleção dos ingredientes ao cuidado em cada prato, garantimos qualidade, sabor e dedicação em cada experiência gastronómica.</p>
+          <ul class="grid-list">
+            <li>
+              <div class="service-card">
+                <a href="pages/menu.html" class="has-before hover:shine">
+                  <figure class="card-bannerimg-holder" style="--width:285;--height:336;">
+                    <img src="./assets/images/service-1.jpg" width="285" height="336" loading="lazy" alt="Pequeno-almoço" class="img-cover">
+                  </figure>
+                </a>
+                <div class="card-content">
+                  <h3 class="title-4 card-title"><a href="pages/menu.html">Pequeno-almoço</a></h3>
+                  <a href="pages/menu.html" class="btn-text hover-underline label-2">Ver Ementa</a>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="service-card">
+                <a href="pages/menu.html" class="has-before hover:shine">
+                  <figure class="card-bannerimg-holder" style="--width:285;--height:336;">
+                    <img src="./assets/images/service-3.jpg" width="285" height="336" loading="lazy" alt="Bebidas" class="img-cover">
+                  </figure>
+                </a>
+                <div class="card-content">
+                  <h3 class="title-4 card-title"><a href="pages/menu.html">Bebidas</a></h3>
+                  <a href="pages/menu.html" class="btn-text hover-underline label-2">Ver Ementa</a>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="service-card">
+                <a href="pages/menu.html" class="has-before hover:shine">
+                  <figure class="card-banner img-holder" style="--width:285;--height:336;">
+                    <img src="./assets/images/service-2.jpg" width="285" height="336" loading="lazy" alt="Entradas" class="img-cover">
+                  </figure>
+                </a>
+                <div class="card-content">
+                  <h3 class="title-4 card-title"><a href="pages/menu.html">Entradas</a></h3>
+                  <a href="pages/menu.html" class="btn-text hover-underline label-2">Ver Ementa</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <img src="./assets/images/shape-1.png" width="246" height="412" loading="lazy" alt="" class="shape shape-1 move-anim">
+          <img src="./assets/images/shape-2.png" width="343" height="345" loading="lazy" alt="" class="shape shape-2 move-anim">
+        </div>
+      </section>
+
+
+      <!-- ── ABOUT ───────────────────────────────────── -->
+      <section class="section about text-center" aria-labelledby="about-label" id="about">
+        <div class="container">
+          <div class="about-content">
+            <p class="label-2 section-subtitle" id="about-label">Nossa História</p>
+            <h2 class="headline-1 section-title">Cada Sabor Conta uma História.</h2>
+            <p class="section-text">No nosso restaurante, cada prato é mais do que uma refeição — é uma viagem através de sabores, tradições e memórias. Cada ingrediente foi cuidadosamente escolhido e cada receita é preparada com paixão, refletindo histórias de família, culturas e momentos que merecem ser celebrados.</p>
+            <div class="contact-label">Reserve Por Chamada</div>
+            <a href="tel:+3511234567" class="body-1 contact-number hover-underline">+351 123 4567</a>
+            <a href="pages/about.html" class="btn btn-primary" style="margin-block-start:26px; margin-inline:auto;">
+              <span class="text text-1">Leia Mais</span>
+              <span class="text text-2" aria-hidden="true">Leia Mais</span>
+            </a>
+          </div>
+          <figure class="about-banner">
+            <img src="./assets/images/about-banner.jpg" width="570" height="570" loading="lazy" alt="about banner" class="w-100" data-parallax-item data-parallax-speed="1">
+            <div class="abs-img abs-img-1 has-before" data-parallax-item data-parallax-speed="1.75">
+              <img src="./assets/images/about-abs-image.jpg" width="285" height="285" loading="lazy" alt="" class="w-100">
+            </div>
+            <div class="abs-img abs-img-2 has-before">
+              <img src="./assets/images/badge-2.png" width="133" height="134" loading="lazy" alt="">
+            </div>
+          </figure>
+          <img src="./assets/images/shape-3.png" width="197" height="194" loading="lazy" alt="" class="shape">
+        </div>
+      </section>
+
+
+      <!-- ── SPECIAL DISH ────────────────────────────── -->
+      <section class="special-dish text-center" aria-labelledby="dish-label">
+        <div class="special-dish-banner">
+          <img src="./assets/images/special-dish-banner.jpg" width="940" height="900" loading="lazy" alt="Prato especial" class="img-cover">
+        </div>
+        <div class="special-dish-content bg-black-10">
+          <div class="container">
+            <img src="./assets/images/badge-1.png" width="28" height="41" loading="lazy" alt="distintivo" class="abs-img">
+            <p class="section-subtitle label-2">Prato Especial</p>
+            <h2 class="headline-1 section-title">Tortellini de Lagosta</h2>
+            <p class="section-text">Delicados tortellini recheados com lagosta suculenta, servidos com um toque de creme que transforma cada garfada em puro luxo.</p>
+            <div class="wrapper">
+              <del class="del body-3">40.00€</del>
+              <span class="span body-1">20.00€</span>
+            </div>
+            <a href="pages/menu.html" class="btn btn-primary">
+              <span class="text text-1">Ver Toda Ementa</span>
+              <span class="text text-2" aria-hidden="true">Ver Toda Ementa</span>
+            </a>
+          </div>
+        </div>
+        <img src="./assets/images/shape-4.png" width="179" height="359" loading="lazy" alt="" class="shape shape-1">
+        <img src="./assets/images/shape-9.png" width="351" height="462" loading="lazy" alt="" class="shape shape-2">
+      </section>
+
+
+      <!-- ── MENU ────────────────────────────────────── -->
+      <section class="section menu" aria-label="menu" id="menu">
+        <div class="container">
+          <p class="section-subtitle text-center label-2">seleção especial</p>
+          <h2 class="headline-1 section-title text-center">Menu Delicioso</h2>
+          <ul class="grid-list">
+            <li>
+              <div class="menu-card hover:card">
+                <figure class="card-banner img-holder" style="--width:100;--height:100;">
+                  <img src="./assets/images/menu-1.jpg" width="100" height="100" loading="eager" alt="Salada Grega" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3"><a href="pages/menu.html" class="card-title">Salada Grega</a></h3>
+                    <span class="badge label-1">Sazonal</span>
+                    <span class="span title-2">25.50€</span>
+                  </div>
+                  <p class="card-text label-1">Tomates, pimento verde, pepino fatiado, cebola, azeitonas e queijo feta</p>
+                  <button class="add-to-cart-btn" onclick="addToCart('Salada Grega', 25.50, this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="menu-card hover:card">
+                <figure class="card-banner img-holder" style="--width:100;--height:100;">
+                  <img src="./assets/images/menu-2.jpg" width="100" height="100" loading="eager" alt="Lasanha" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3"><a href="pages/menu.html" class="card-title">Lasanha</a></h3>
+                    <span class="span title-2">40.00€</span>
+                  </div>
+                  <p class="card-text label-1">Vegetais, queijo, carne moída, molho de tomate, temperos e especiarias</p>
+                  <button class="add-to-cart-btn" onclick="addToCart('Lasanha', 40.00, this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="menu-card hover:card">
+                <figure class="card-banner img-holder" style="--width:100;--height:100;">
+                  <img src="./assets/images/menu-3.jpg" width="100" height="100" loading="eager" alt="Abóbora Butternut" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3"><a href="pages/menu.html" class="card-title">Abóbora Butternut</a></h3>
+                    <span class="span title-2">10.00€</span>
+                  </div>
+                  <p class="card-text label-1">Sopa cremosa com especiarias aromáticas e natas frescas</p>
+                  <button class="add-to-cart-btn" onclick="addToCart('Abóbora Butternut', 10.00, this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="menu-card hover:card">
+                <figure class="card-banner img-holder" style="--width:100;--height:100;">
+                  <img src="./assets/images/menu-4.jpg" width="100" height="100" loading="eager" alt="Tokusen Wagyu" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3"><a href="pages/menu.html" class="card-title">Tokusen Wagyu</a></h3>
+                    <span class="badge label-1">Novo</span>
+                    <span class="span title-2">39.00€</span>
+                  </div>
+                  <p class="card-text label-1">Bife de wagyu grelhado com legumes salteados e molho demi-glace</p>
+                  <button class="add-to-cart-btn" onclick="addToCart('Tokusen Wagyu', 39.00, this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="menu-card hover:card">
+                <figure class="card-banner img-holder" style="--width:100;--height:100;">
+                  <img src="./assets/images/menu-5.jpg" width="100" height="100" loading="eager" alt="Azeitonas Recheadas" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3"><a href="pages/menu.html" class="card-title">Azeitonas Recheadas</a></h3>
+                    <span class="span title-2">25.00€</span>
+                  </div>
+                  <p class="card-text label-1">Abacates com carne de caranguejo, cebola roxa e pimento vermelho</p>
+                  <button class="add-to-cart-btn" onclick="addToCart('Azeitonas Recheadas', 25.00, this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="menu-card hover:card">
+                <figure class="card-banner img-holder" style="--width:100;--height:100;">
+                  <img src="./assets/images/menu-6.jpg" width="100" height="100" loading="eager" alt="Góbio" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3"><a href="pages/menu.html" class="card-title">Góbio</a></h3>
+                    <span class="span title-2">49.00€</span>
+                  </div>
+                  <p class="card-text label-1">Vegetais, queijo, carne picada, molho de tomate, temperos e especiarias</p>
+                  <button class="add-to-cart-btn" onclick="addToCart('Góbio', 49.00, this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <p class="menu-text text-center">Durante o inverno diariamente das <span class="span">19:00h</span> às <span class="span">21:00h</span></p>
+          <a href="pages/menu.html" class="btn btn-primary">
+            <span class="text text-1">Ver Toda Ementa</span>
+            <span class="text text-2" aria-hidden="true">Ver Toda Ementa</span>
+          </a>
+          <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="" class="shape shape-2 move-anim">
+          <img src="./assets/images/shape-6.png" width="343" loading="lazy" alt="" class="shape shape-3 move-anim">
+        </div>
+      </section>
+
+
+      <!-- ── TESTIMONIALS ────────────────────────────── -->
+      <section class="section testi text-center has-bg-image"
+        style="background-image:url('./assets/images/testimonial-bg.jpg')" aria-label="testimonials">
+        <div class="container">
+          <div class="quote"></div>
+          <p class="headline-2 testi-text"></p>
+          <div class="wrapper">
+            <div class="separator"></div><div class="separator"></div><div class="separator"></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ── FLOOR PLAN RESERVATION ─────────────────── -->
+      <section class="reservation-map-section text-center" id="reserva" aria-label="reservar mesa">
+        <div class="container">
+
+          <p class="section-subtitle label-2">Escolha o seu lugar</p>
+          <h2 class="headline-1 section-title">Reservar uma Mesa</h2>
+          <p class="section-intro">
+            Clique na mesa que prefere na planta do restaurante. As mesas douradas estão disponíveis para reserva.
+          </p>
+
+          <div class="floor-legend">
+            <div class="legend-item"><div class="legend-dot free"></div><span>Disponível</span></div>
+            <div class="legend-item"><div class="legend-dot occupied"></div><span>Ocupada</span></div>
+            <div class="legend-item"><div class="legend-dot selected"></div><span>Selecionada</span></div>
+          </div>
+
+          <div class="floor-plan-wrap" aria-label="planta do restaurante">
+            <p class="room-label">— Zona Janela —</p>
+            <div class="tables-row" id="zw1"></div>
+            <div class="tables-row" id="zw2"></div>
+            <div class="zone-divider"><span>Sala Principal</span></div>
+            <div class="tables-row" id="zm1"></div>
+            <div class="tables-row" id="zm2"></div>
+            <div class="zone-divider"><span>Terraço</span></div>
+            <div class="tables-row" id="zt"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── BOOKING MODAL ───────────────────────────── -->
+      <div class="booking-modal-backdrop" id="bookingModalBackdrop">
+        <div class="booking-modal" role="dialog" aria-modal="true" aria-label="Reservar mesa">
+
+          <button class="booking-modal-close" onclick="closeBookingModal()" aria-label="Fechar">&#x2715;</button>
+
+          <!-- FORM SCREEN -->
+          <div id="bmFormScreen">
+            <div class="bm-badge" id="bmBadge">Mesa</div>
+            <h2>Confirmar Reserva</h2>
+            <p class="bm-sub" id="bmSub">Escolha data, hora e nome</p>
+            <div class="bm-divider"></div>
+
+            <p class="bm-field-label">Dia da reserva</p>
+            <div class="bm-cal">
+              <div class="bm-cal-head">
+                <button class="cal-nav-btn" onclick="bmCalPrev()">&#8249;</button>
+                <span class="cal-month-lbl" id="calMonthLbl"></span>
+                <button class="cal-nav-btn" onclick="bmCalNext()">&#8250;</button>
+              </div>
+              <div class="cal-grid">
+                <div class="cal-dn">Seg</div><div class="cal-dn">Ter</div><div class="cal-dn">Qua</div>
+                <div class="cal-dn">Qui</div><div class="cal-dn">Sex</div><div class="cal-dn">Sáb</div><div class="cal-dn">Dom</div>
+                <div id="calDatesGrid" style="display:contents"></div>
+              </div>
+            </div>
+
+            <p class="bm-field-label">Horário</p>
+            <div class="time-slot-grid" id="bmTimeGrid"></div>
+
+            <p class="bm-field-label">Nome para a reserva</p>
+            <input type="text" id="bmGuestName" class="bm-input" placeholder="O seu nome completo" autocomplete="name">
+
+            <div class="bm-summary" id="bmSummary">
+              <div class="bm-s-row"><span class="bm-s-key">Mesa</span><span class="bm-s-val gold" id="bmSumTable">—</span></div>
+              <div class="bm-s-row"><span class="bm-s-key">Data</span><span class="bm-s-val" id="bmSumDate">—</span></div>
+              <div class="bm-s-row"><span class="bm-s-key">Hora</span><span class="bm-s-val" id="bmSumTime">—</span></div>
+            </div>
+
+            <div class="bm-feedback" id="bmFeedback"></div>
+            <button class="bm-confirm-btn" onclick="confirmBooking()">Confirmar Reserva</button>
+          </div>
+
+          <!-- SUCCESS SCREEN -->
+          <div class="bm-success-screen" id="bmSuccessScreen">
+            <div class="bm-success-icon">&#10003;</div>
+            <h3>Reserva confirmada!</h3>
+            <p>Aguardamos a sua visita no Casa do Sabor.</p>
+            <div class="bm-success-details" id="bmSuccessDetails"></div>
+            <button class="bm-confirm-btn" onclick="closeAfterBooking()">Fechar</button>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ── FEATURES ────────────────────────────────── -->
+      <section class="section features text-center" aria-label="features">
+        <div class="container">
+          <p class="section-subtitle label-2">Porquê escolher-nos</p>
+          <h2 class="headline-1 section-title">Os nossos pontos fortes</h2>
+          <ul class="grid-list">
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon"><img src="./assets/images/features-icon-1.png" width="100" height="80" loading="lazy" alt="icon"></div>
+                <h3 class="title-2 card-title">Segurança alimentar</h3>
+                <p class="label-1 card-text">Priorizamos a segurança e a higiene em cada detalhe, garantindo que desfrute de cada refeição com total confiança.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon"><img src="./assets/images/features-icon-2.png" width="100" height="80" loading="lazy" alt="icon"></div>
+                <h3 class="title-2 card-title">Ambiente agradável</h3>
+                <p class="label-1 card-text">Desfrute de momentos únicos num espaço acolhedor, elegante e pensado para o seu conforto.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon"><img src="./assets/images/features-icon-3.png" width="100" height="80" loading="lazy" alt="icon"></div>
+                <h3 class="title-2 card-title">Chefs experientes</h3>
+                <p class="label-1 card-text">A nossa equipa combina talento e paixão, transformando ingredientes frescos em pratos que despertam todos os sentidos.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon"><img src="./assets/images/features-icon-4.png" width="100" height="80" loading="lazy" alt="icon"></div>
+                <h3 class="title-2 card-title">Eventos e Festas</h3>
+                <p class="label-1 card-text">Transforme os seus momentos especiais em experiências inesquecíveis com o nosso espaço e serviço dedicado.</p>
+              </div>
+            </li>
+          </ul>
+          <img src="./assets/images/shape-7.png" width="208" height="178" loading="lazy" alt="" class="shape shape-1">
+          <img src="./assets/images/shape-8.png" width="120" height="115" loading="lazy" alt="" class="shape shape-2">
+        </div>
+      </section>
+
+
+      <!-- ── EVENTS ──────────────────────────────────── -->
+      <section class="section event bg-black-10" aria-label="event">
+        <div class="container">
+          <p class="section-subtitle label-2 text-center">Novidades</p>
+          <h2 class="section-title headline-1 text-center">Próximo Evento</h2>
+          <ul class="grid-list">
+            <li>
+              <div class="event-card has-before hover:shine">
+                <div class="card-banner img-holder" style="--width:350;--height:450;">
+                  <img src="./assets/images/event-1.jpg" width="350" height="450" loading="lazy" alt="Evento" class="img-cover">
+                  <time class="publish-date label-2" datetime="2025-09-15">15/09/2025</time>
+                </div>
+                <div class="card-content">
+                  <p class="card-subtitle label-2 text-center">Comida e Sabor</p>
+                  <h3 class="card-title title-2 text-center">Um sabor tão bom que se come primeiro com os olhos.</h3>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="event-card has-before hover:shine">
+                <div class="banner img-holder" style="--width:350;--height:450;">
+                  <img src="./assets/images/event-2.jpg" width="350" height="450" loading="lazy" alt="Evento" class="img-cover">
+                  <time class="publish-date label-2" datetime="2025-09-08">08/09/2025</time>
+                </div>
+                <div class="card-content">
+                  <p class="card-subtitle label-2 text-center">Comida e Sabor</p>
+                  <h3 class="card-title title-2 text-center">Um sabor tão bom que se come primeiro com os olhos.</h3>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="event-card has-before hover:shine">
+                <div class="banner img-holder" style="--width:350;--height:450;">
+                  <img src="./assets/images/event-3.jpg" width="350" height="450" loading="lazy" alt="Evento" class="img-cover">
+                  <time class="publish-date label-2" datetime="2025-09-03">03/09/2025</time>
+                </div>
+                <div class="card-content">
+                  <p class="card-subtitle label-2 text-center">Receita</p>
+                  <h3 class="card-title title-2 text-center">Um sabor tão bom que se come primeiro com os olhos.</h3>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <a href="pages/contact.html" class="btn btn-primary">
+            <span class="text text-1">Ver o nosso blog</span>
+            <span class="text text-2" aria-hidden="true">Ver o nosso blog</span>
+          </a>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="footer section has-bg-image text-center" style="background-image:url('./assets/images/footer-bg.jpg');">
+    <div class="container">
+      <div class="footer-top grid-list">
+        <div class="footer-brand has-before has-after">
+          <a href="index.html" class="logo">
+            <img src="./assets/images/logo.svg" width="160" height="50" loading="lazy" alt="Casa do Sabor">
+          </a>
+          <address class="body-4">Rua do Restaurante, Cidade Deliciosa, Lisboa 5555, Portugal</address>
+          <a href="mailto:booking@grilli.com" class="body-4 contact-link">booking@grilli.com</a>
+          <a href="tel:+351123123456" class="body-4 contact-link">Pedido de Reserva : +351-123-123456</a>
+          <p class="body-4">Aberto: 09:00h - 22:00h</p>
+          <div class="wrapper">
+            <div class="separator"></div><div class="separator"></div><div class="separator"></div>
+          </div>
+          <p class="title-1">Novidades & Ofertas</p>
+          <p class="label-1">Subscreva e receba <span class="span">25% desconto</span></p>
+          <form action="" class="input-wrapper">
+            <div class="icon-wrapper">
+              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+              <input type="email" name="email_address" placeholder="O seu Email" autocomplete="off" class="input-field">
+            </div>
+            <button type="submit" class="btn btn-secondary">
+              <span class="text text-1">Subscreva</span>
+              <span class="text text-2" aria-hidden="true">Subscreva</span>
+            </button>
+          </form>
+        </div>
+        <ul class="footer-list">
+          <li><a href="index.html"         class="label-2 footer-link hover-underline">Início</a></li>
+          <li><a href="pages/menu.html"    class="label-2 footer-link hover-underline">Ementas</a></li>
+          <li><a href="pages/about.html"   class="label-2 footer-link hover-underline">Sobre Nós</a></li>
+          <li><a href="pages/chefs.html"   class="label-2 footer-link hover-underline">Os Nossos Chefs</a></li>
+          <li><a href="pages/contact.html" class="label-2 footer-link hover-underline">Contacto</a></li>
+        </ul>
+        <ul class="footer-list">
+          <li><a href="#" class="label-2 footer-link hover-underline">Facebook</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Instagram</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">TikTok</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Youtube</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Google Map</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#top" class="back-top-btn" aria-label="Voltar ao topo" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+
+  <!-- ══ CART DRAWER ══ -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho">
+    <div class="cart-header">
+      <h2 class="cart-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        O Meu Carrinho
+      </h2>
+      <button class="cart-close" onclick="closeCart()" aria-label="Fechar">&#x2715;</button>
+    </div>
+
+    <div class="cart-empty" id="cartEmpty">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <p>O seu carrinho está vazio.</p>
+      <a href="pages/menu.html" class="btn btn-primary" style="margin-top:20px;margin-inline:auto;" onclick="closeCart()">
+        <span class="text text-1">Ver Ementa</span>
+        <span class="text text-2" aria-hidden="true">Ver Ementa</span>
+      </a>
+    </div>
+
+    <ul class="cart-list" id="cartList"></ul>
+
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">0.00€</span>
+      </div>
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">0.00€</span>
+      </div>
+      <button class="cart-checkout-btn" onclick="goToCheckout()">
+        Finalizar Encomenda
+      </button>
+      <button class="cart-clear-btn" onclick="clearCart()">Limpar Carrinho</button>
+    </div>
+  </aside>
+
+  <!-- Cart checkout success toast -->
+  <div class="cart-toast" id="cartToast"></div>
+
+  <!-- Scripts -->
+  <script src="js/header.js"></script>
+  <script src="js/hero.js"></script>
+  <script src="js/parallax.js"></script>
+  <script src="js/backtotop.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/reservation.js"></script>
+  <script src="js/reservation-map.js"></script>
+  <script src="js/newsletter.js"></script>
+  <script src="js/cart.js"></script>
+
+  <!-- Preloader dismiss -->
+  <script>
+    window.addEventListener("load", () => {
+      const preloader = document.querySelector("[data-preaload]");
+      if (preloader) {
+        preloader.classList.add("loaded");
+        document.body.classList.add("loaded");
+      }
+    });
+  </script>
+
+  <!-- Smooth scroll with header offset -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
+        if (!href || href === "#" || href === "#top") return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        const headerH = (document.querySelector(".header")?.offsetHeight || 80) + 20;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerH;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      });
+    });
+  </script>
+
+  <script src="./js/db.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

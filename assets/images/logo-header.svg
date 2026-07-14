@@ -1,0 +1,25 @@
+<svg width="160" height="50" viewBox="0 0 160 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cloche mini icon -->
+  <!-- Plate base -->
+  <ellipse cx="25" cy="35" rx="18" ry="3" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+  <!-- Dome -->
+  <path d="M9,35 Q9,18 25,15 Q41,18 41,35 Z" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+  <!-- Knob -->
+  <circle cx="25" cy="15" r="3" fill="#C9A84C"/>
+  <!-- Fork left -->
+  <line x1="4"  y1="14" x2="4"  y2="38" stroke="#C9A84C" stroke-width="1.3"/>
+  <line x1="2"  y1="14" x2="2"  y2="22" stroke="#C9A84C" stroke-width="1"/>
+  <line x1="6"  y1="14" x2="6"  y2="22" stroke="#C9A84C" stroke-width="1"/>
+  <!-- Knife right -->
+  <line x1="46" y1="14" x2="46" y2="38" stroke="#C9A84C" stroke-width="1.3"/>
+  <path d="M44,14 L48,26 L44,26 Z" fill="#C9A84C"/>
+
+  <!-- Name -->
+  <text x="55" y="24" font-family="Georgia,serif" font-size="15"
+        letter-spacing="0.5" font-style="italic" fill="#E2C06A">Casa do Sabor</text>
+  <!-- Tagline -->
+  <text x="55" y="38" font-family="Arial,sans-serif" font-size="7.5"
+        letter-spacing="2.5" fill="#8B6914">RESTAURANTE · LISBOA</text>
+  <!-- Rule under tagline -->
+  <line x1="55" y1="41" x2="158" y2="41" stroke="#C9A84C" stroke-width="0.5"/>
+</svg>
